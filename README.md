@@ -4,12 +4,11 @@
 ## 프로젝트 설명
 
 - 목적
-    * todo list 를 작성하여 mongodb 서버에 저장하기
-    * 작성한 todo 요소에 대한 update 및 delete 가능
+    * 기존의 validation 모듈을 개조해서 활용한 입력 데이터 체크 게시판
 - 특징
     * html form 형태로 요청
         - 각 요청 기반은 create 시 자동 생성된 "_id" 필드값이다.
-        - get : get todo list
+        - get : get board list
         - post : execute insert_one action
         - put : execute update_one action
         - delete : execute delete_one action
