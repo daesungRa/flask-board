@@ -1,5 +1,6 @@
 import os, json
 
+# base dir test
 # print(os.path.split(os.path.abspath(__file__))) # split 결과, list 형태로 반환함
 # print(os.path.split(os.path.abspath(__file__))[0]) # 첫 번째 인덱스는 dir 까지
 # print(os.path.abspath(os.path.dirname(__file__))) # 더욱 간단하게
@@ -14,12 +15,13 @@ print('basedir + json db config file\t: ' + os.path.join(basedir, 'db_config.jso
 
 config = json.load(open(os.path.join(basedir, 'db_config.json')))
 
-import random
-from random import shuffle, choice
-
-print('random : ' + str(random.randrange(1, 11)))
-abc = [1,2,3,4,5,6,7,8,9,10]
-shuffle(abc)
-print('shuffle : ' + str(abc))
-print('choice : ' + str(choice(abc)))
+# random unit test
+# import random
+# from random import shuffle, choice
+#
+# print('random : ' + str(random.randrange(1, 11)))
+# abc = [1,2,3,4,5,6,7,8,9,10]
+# shuffle(abc)
+# print('shuffle : ' + str(abc))
+# print('choice : ' + str(choice(abc)))
 

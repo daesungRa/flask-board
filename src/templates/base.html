@@ -1,0 +1,101 @@
+<!DOCTYPE HTML>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Welcome page</title>
+
+        <!-- imported apis -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+
+        <!-- about bootstrap -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/bootstrap-4.3.1-dist/css/bootstrap.min.css') }}" />
+        <script src="{{ url_for('static', filename='bootstrap/bootstrap-4.3.1-dist/js/bootstrap.min.js') }}"></script>
+
+        <!-- about summernote -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='summernote/dist/summernote.css') }}" />
+        <script src="{{ url_for('static', filename='summernote/dist/summernote.js') }}"></script>
+        <script src="{{ url_for('static', filename='summernote/dist/lang/summernote-ko-KR.js') }}"></script>
+
+        <!-- inner static files -->
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}" />
+        <script src="{{ url_for('static', filename='js/base.js' ) }}"></script>
+
+    </head>
+    <body>
+
+        <div class="site-wrapper">
+            <div class="site-wrapper-inner">
+                <div class="cover-container">
+                    <div class="masthead clearfix">
+                        <div class="inner">
+                            <h3 class="masthead-brand">Flask Board</h3>
+                            <nav>
+                                <ul class="nav masthead-nav">
+                                    <li class="active"><a href="#">Home</a></li>
+                                    <li><a href="#">Board</a></li>
+                                    <li><a href="#">Contact</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+
+                    <div class="inner cover" style="border-bottom: 0px;">
+                        <h3>block content part</h3>
+                        {% block content %}
+                        {% endblock %}
+                    </div>
+
+                    <div class="mastfoot">
+                        <div class="inner">
+                            <p>&copy; copyright <a href="#">everyone</a>, by <a href="https://github.com/daesungRa">@rds</a>.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <!--
+            &lt;!&ndash; nav part &ndash;&gt;
+            <nav>//nav part//</nav><br/>
+
+            <br/>
+
+            &lt;!&ndash;<div>
+                <h3>text part</h3>
+                <div class="summernote"><p></p></div>
+            </div>&ndash;&gt;
+
+            <div>
+                <h3>text part on form tag</h3>
+                <form method="post">
+                    <textarea class="summernote" name="editordata"></textarea>
+                </form>
+            </div>
+
+            &lt;!&ndash; footer part &ndash;&gt;
+            <br/>
+            <footer>//footer part//</footer>
+            -->
+        </div>
+
+        <script>
+            $(document).ready(function() {
+                $('.summernote').summernote({
+                    placeholder: 'hi, summernote!!',
+                    tabsize: 2,
+                    height: 200,
+                    minHeight: 200,
+                    maxHeight: null,
+                    focus: true
+                });
+            });
+        </script>
+    </body>
+</html>
