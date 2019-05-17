@@ -15,7 +15,10 @@ def home():
 # todo routes
 @app.route('/todos/', methods=['GET'])
 def get_tasks():
-    return jsonify(todo.find({})), 200
+    result = todo.find({})
+    # print(type(result)) # type of list
+    ## return jsonify(todo.find({})), 200
+    return render_template('index.html', todo_list=result), 200
 
 @app.route('/todos/<string:todo_id>/', methods=['GET'])
 def get_task(todo_id):

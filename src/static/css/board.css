@@ -1,7 +1,27 @@
-.board-table {
-    display: inline-block;
-    width:
-    border: 1px solid black;
-    border-radius: 5px;
+.cover .table-board, .cover .table-head, .cover .table-body {
+    /*border: 1px solid blue;*/
 }
-.board-table
+.cover .table-board {
+    margin: 40px 0 40px 0;
+}
+.cover .table-head {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+.cover .table-body {
+    margin-bottom: 3px;
+}
+.cover .table-body:hover {
+    background-color: #d4dde6;
+    cursor: pointer;
+}
+.cover .table-board span {
+    border-left: 1px solid #787878;
+}
+
+.cover .btn-test {
+    width: 60%;
+    height: 60%;
+    margin-top: 10px;
+}

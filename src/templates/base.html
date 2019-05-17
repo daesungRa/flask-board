@@ -26,11 +26,20 @@
 
     </head>
     <body>
-
+        <div class="inner">
+            <h3 class="masthead-brand">Flask Board</h3>
+            <nav>
+                <ul class="nav masthead-nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#">Board</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
         <div class="site-wrapper">
             <div class="site-wrapper-inner">
                 <div class="cover-container">
-                    <div class="masthead clearfix">
+                    <!--<div class="masthead clearfix">
                         <div class="inner">
                             <h3 class="masthead-brand">Flask Board</h3>
                             <nav>
@@ -41,18 +50,16 @@
                                 </ul>
                             </nav>
                         </div>
-                    </div>
+                    </div>-->
 
-                    <div class="inner cover" style="border-bottom: 0px;">
+                    <div class="inner cover">
                         <h3>block content part</h3>
                         {% block content %}
                         {% endblock %}
                     </div>
 
                     <div class="mastfoot">
-                        <div class="inner">
-                            <p>&copy; copyright <a href="#">everyone</a>, by <a href="https://github.com/daesungRa">@rds</a>.</p>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -83,6 +90,10 @@
             <br/>
             <footer>//footer part//</footer>
             -->
+        </div>
+
+        <div class="inner">
+            <p>&copy; copyright <a href="#">everyone</a>, by <a href="https://github.com/daesungRa">@rds</a>.</p>
         </div>
 
         <script>

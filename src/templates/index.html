@@ -1,32 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-    <br/>
-    <div class="board-table">
-        <div class="row-thead">
-
+    <hr/>
+    <div class="container-fluid table-board">
+        <div class="row table-head">
+            <span class="col-md-2 tcontent-id">ID</span>
+            <span class="col-md-6 tcontent-title">TITLE</span>
+            <span class="col-md-2 tcontent-created">CREATED</span>
+            <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">UPDATED</span>
         </div>
+        {% if todo_list %}
+            {% for todo in todo_list %}
+                <div class="row table-body">
+                    <span class="col-md-2 tcontent-id"></span>
+                    <span class="col-md-6 tcontent-title">{{ todo.title }}</span>
+                    <span class="col-md-2 tcontent-created">{{ todo.created }}</span>
+                    <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">{{ todo.updated }}</span>
+                </div>
+            {% endfor %}
+        {% endif %}
     </div>
-
-
-
-    <table class="board-table">
-        <thead>
-            <tr>
-                <td colspan="5">게시판 테이블</td>
-            </tr>
-            <tr>
-                <td>번호</td>
-                <td>제목</td>
-                <td>작성자</td>
-                <td>등록일</td>
-            </tr>
-        </thead>
-        <tbody>
-
-        </tbody>
-        <tfoot>
-
-        </tfoot>
-    </table><br/>
-    <a href="#" class="btn btn-lg btn-default">Learn more!</a>
+    <hr/>
+    <a href="#" class="btn btn-lg btn-default btn-test">Learn more!</a>
 {% endblock %}
