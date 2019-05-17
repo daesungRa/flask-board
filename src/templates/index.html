@@ -8,17 +8,24 @@
             <span class="col-md-2 tcontent-created">CREATED</span>
             <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">UPDATED</span>
         </div>
-        {% if todo_list %}
-            {% for todo in todo_list %}
+        {% if result_list %}
+            {% for result in result_list %}
                 <div class="row table-body">
                     <span class="col-md-2 tcontent-id"></span>
-                    <span class="col-md-6 tcontent-title">{{ todo.title }}</span>
-                    <span class="col-md-2 tcontent-created">{{ todo.created }}</span>
-                    <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">{{ todo.updated }}</span>
+                    <span class="col-md-6 tcontent-title">{{ result.title }}</span>
+                    <span class="col-md-2 tcontent-created">{{ result.created }}</span>
+                    <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">{{ result.updated }}</span>
                 </div>
             {% endfor %}
+        {% else %}
+            <div class="notFound">
+                자료가 없습니다!
+            </div>
         {% endif %}
     </div>
     <hr/>
-    <a href="#" class="btn btn-lg btn-default btn-test">Learn more!</a>
+    <a href="#" class="btn btn-lg btn-default btn-test">Learn more!</a><br/><br/>
+    <a href="http://localhost:5000/todos/" class="btn btn-sm btn-default">TODOS</a>
+    <a href="http://localhost:5000/boardList/" class="btn btn-sm btn-default">BOARDS</a>
+    <a href="http://localhost:5000/emptyTest/" class="btn btn-sm btn-default">EMPTY LIST</a>
 {% endblock %}

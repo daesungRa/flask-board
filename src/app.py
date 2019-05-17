@@ -10,15 +10,35 @@ todo = todo.Todo()
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    return render_template('index.html'), 200
+    result = todo.find({}, 'boards')
+
+    ## return render_template('index.html'), 200
+    return render_template('index.html', result_list=result), 200
+
+@app.route('/emptyTest/', methods=['GET'])
+def emptyTest():
+    result = todo.find({}, 'empty_table')
+    # print(type(result)) # type of list
+
+    ## return jsonify(todo.find({})), 200
+    return render_template('index.html', result_list=result), 200
+
+@app.route('/boardList/', methods=['GET'])
+def get_boardList():
+    result = todo.find({}, 'boards')
+    # print(type(result)) # type of list
+
+    ## return jsonify(todo.find({})), 200
+    return render_template('index.html', result_list=result), 200
 
 # todo routes
 @app.route('/todos/', methods=['GET'])
 def get_tasks():
-    result = todo.find({})
+    result = todo.find({}, 'todos')
     # print(type(result)) # type of list
+
     ## return jsonify(todo.find({})), 200
-    return render_template('index.html', todo_list=result), 200
+    return render_template('index.html', result_list=result), 200
 
 @app.route('/todos/<string:todo_id>/', methods=['GET'])
 def get_task(todo_id):

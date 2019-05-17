@@ -1,3 +1,6 @@
+/*
+ * board list style (table)
+ */
 .cover .table-board, .cover .table-head, .cover .table-body {
     /*border: 1px solid blue;*/
 }
@@ -20,8 +23,18 @@
     border-left: 1px solid #787878;
 }
 
+/*
+ * button style
+ */
 .cover .btn-test {
     width: 60%;
     height: 60%;
     margin-top: 10px;
+}
+
+/*
+ * not found
+ */
+.cover .notFound {
+    margin-top: 30px;
 }

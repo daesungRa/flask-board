@@ -32,10 +32,18 @@ class Todo(object):
         res = self.db.insert(todo, self.collection_name)
         return "Inserted _Id " + res
 
-    def find(self, todo):
+    def find(self, todo, collection_name=None):
+        # 컬렉션 변경 가능하도록 수정 (190517, fri)
+        ## 'Todo' 인 클래스명도 변경 요망
+        if collection_name is not None:
+            self.collection_name = collection_name
         return self.db.find(todo, self.collection_name)
 
-    def find_by_id(self, id):
+    def find_by_id(self, id, collection_name=None):
+        # 컬렉션 변경 가능하도록 수정 (190517, fri)
+        ## 'Todo' 인 클래스명도 변경 요망
+        if collection_name is not None:
+            self.collection_name = collection_name
         return self.db.find_by_id(id, self.collection_name)
 
     def update(self, id, todo):
