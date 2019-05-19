@@ -21,7 +21,7 @@ def emptyTest():
     # print(type(result)) # type of list
 
     ## return jsonify(todo.find({})), 200
-    return render_template('index.html', result_list=result), 200
+    return render_template('board.html', result_list=result), 200
 
 @app.route('/boardList/', methods=['GET'])
 def get_boardList():
@@ -29,7 +29,7 @@ def get_boardList():
     # print(type(result)) # type of list
 
     ## return jsonify(todo.find({})), 200
-    return render_template('index.html', result_list=result), 200
+    return render_template('board.html', result_list=result), 200
 
 # todo routes
 @app.route('/todos/', methods=['GET'])
@@ -38,7 +38,7 @@ def get_tasks():
     # print(type(result)) # type of list
 
     ## return jsonify(todo.find({})), 200
-    return render_template('index.html', result_list=result), 200
+    return render_template('board.html', result_list=result), 200
 
 @app.route('/todos/<string:todo_id>/', methods=['GET'])
 def get_task(todo_id):

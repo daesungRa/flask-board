@@ -59,6 +59,10 @@ body {
 .masthead-brand {
     margin-bottom: 10px;
 }
+.masthead-brand:hover, .masthead-brand:focus {
+    color: #696969;
+    cursor: pointer;
+}
 .masthead-nav > li {
     display: inline-block;
 }
@@ -80,8 +84,8 @@ body {
     border-bottom-color: rgba(255,255,255,.25);
 }
 .masthead-nav > .active > a, .masthead-nav > .active > a:hover, .masthead-nav > .active > a:focus {
-    color: #fff;
-    border-bottom-color: #fff;
+    color: #acacac;
+    border-bottom-color: #acacac;
 }
 @media (min-width: 768px) {
     .masthead-brand {

@@ -9,6 +9,7 @@ verify_ssl = true
 flask = "*"
 pymongo = "*"
 flask-cors = "*"
+jinja2 = "*"
 
 [requires]
 python_version = "3.7"
