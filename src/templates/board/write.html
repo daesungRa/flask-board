@@ -11,15 +11,15 @@
         <form class="form-group write-form" method="post">
             <select name="board-type" class="form-control" required>
                 <option>(선택) 게시판 종류를 선택하세요</option>
-                <option value="boards">게시글</option>
-                <option value="todos">할 일</option>
+                <option value="0" selected>게시글</option>
+                <option value="1">할 일</option>
             </select>
-            <input name="title" type="text" class="form-control" placeholder="제목 입력" />
-            <input name="author" type="text" class="form-control" value="(작성자 이름)" readonly />
-            <input name="created" type="text" class="form-control" value="{{ currTime }}" readonly />
-            <textarea name="body" class="summernote"></textarea>
+            <input name="title" type="text" class="form-control title" placeholder="제목을 입력하세요" />
+            <input name="author" type="text" class="form-control author" value="testUser" readonly />
+            <input name="created" type="text" class="form-control created" value="{{ currTime }}" readonly />
+            <textarea name="content" class="summernote content"></textarea>
             <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/getViewPage/'">뷰 페이지(임시)</button>
+            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/view/'">뷰 페이지(임시)</button>
         </form>
     </div>
     <hr/>
@@ -29,7 +29,7 @@
             convertPage($('.masthead-nav > #gotoBoard'));
 
             $('.summernote').summernote({
-                placeholder: '내용 입력',
+                placeholder: '내용을 입력하세요',
                 tabsize: 2,
                 height: 200,
                 minHeight: 200,
@@ -38,7 +38,7 @@
             });
 
             $('.write-form #write-submit').on('click', function() {
-                alert('제출한다!');
+                write($('.write-form'));
             });
         });
     </script>

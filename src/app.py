@@ -19,26 +19,37 @@ def contact():
 
 # board routes
 @app.route('/boardList/', methods=['GET'])
-def get_boardList():
+def boardList():
     result = todo.find({}, 'boards')
     # print(type(result)) # type of list
 
     ## return jsonify(todo.find({})), 200
     return render_template('board/board.html', result_list=result), 200
 
-@app.route('/getViewPage/', methods=['GET'])
-def getViewPage():
+@app.route('/view/', methods=['GET'])
+def view():
     return render_template('board/boardView.html'), 200
 
-@app.route('/getWritePage/', methods=['GET'])
-def getWritePage():
-    currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-    return render_template('board/write.html', currTime=currTime), 200
+@app.route('/write/', methods=['GET', 'POST'])
+def write():
+    if request.method == 'GET':
+        currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
+        return render_template('board/write.html', currTime=currTime), 200
+    else:
+        # write logic
+        pass
 
-@app.route('/getModifyPage/', methods=['GET'])
-def getModifyPage():
-    currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-    return render_template('board/modify.html', currTime=currTime), 200
+@app.route('/modify/', methods=['GET', 'POST'])
+def modify():
+    if request.method == 'GET':
+        currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
+        return render_template('board/modify.html', currTime=currTime), 200
+    else:
+        pass
+
+@app.route('/delete/', methods=['POST'])
+def delete():
+    pass
 
 # todo routes
 @app.route('/todos/', methods=['GET'])

@@ -9,12 +9,12 @@
         <span>(사용자 정보 출력)</span>
         <hr>
         <form class="form-group write-form" method="post">
-            <input name="title" type="text" class="form-control" value="(이전에 입력한 글 제목)" />
-            <input name="author" type="text" class="form-control" value="(작성자 이름)" readonly />
-            <input name="created" type="text" class="form-control" value="{{ currTime }} 수정시각" readonly />
-            <textarea name="body" class="summernote" name="editordata">(이전에 입력한 글 내용)</textarea>
+            <input name="title" type="text" class="form-control title" value="(이전에 입력한 글 제목)" />
+            <input name="author" type="text" class="form-control author" value="(작성자 이름)" readonly />
+            <input name="updated" type="text" class="form-control updated" value="{{ currTime }} 수정시각" readonly />
+            <textarea name="content" class="summernote content">(이전에 입력한 글 내용)</textarea>
             <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/getViewPage/'">돌아가기</button>
+            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/view/'">돌아가기</button>
         </form>
     </div>
     <hr/>
