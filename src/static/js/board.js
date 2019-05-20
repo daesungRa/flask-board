@@ -2,7 +2,7 @@ function write(form) {
     var formData = form.serialize();
     $.ajax({
         type: 'post',
-        url: 'http://localhost:5000/write/',
+        url: 'http://localhost:5000/board/write/',
         data: formData,
         dataType: 'text',
         success: function(data) {

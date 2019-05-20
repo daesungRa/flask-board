@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="board-guide">
-        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/write/">글쓰기</a>
+        <div class="subject">{{ subject }}</div>
+        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/board/write/">글쓰기</a>
     </div>
     <br/><hr/>
     <div class="container-fluid table-board">
@@ -28,7 +29,7 @@
     </div>
     <hr/>
     <!-- 동 페이지에서 ajax 로 처리할 것! 페이지 흐름에 대한 고려도 필요함 -->
-    <a href="http://localhost:5000/boardList/" class="btn btn-sm btn-default">BOARDS</a>
+    <a href="http://localhost:5000/boards/" class="btn btn-sm btn-default">BOARDS</a>
     <a href="http://localhost:5000/todos/" class="btn btn-sm btn-default">TODOS</a>
 
     <script>

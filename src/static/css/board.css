@@ -2,8 +2,11 @@
  * board guide style
  */
 .board-guide {
-    width: 100px;
-    float: right;
+    width: 100%;
+}
+.board-guide .subject {
+    float: left;
+    font-size: 22pt;
 }
 .board-guide .btn-default {
     float: right;
