@@ -66,6 +66,10 @@
     font-size: 8pt;
 }
 .write-container > .write-form > input, select {
+    font-size: 10pt;
+    font-weight: bolder;
+    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Nanum Gothic Coding', monospace;
     margin-bottom: 10px;
 }
 .write-container > .write-form > button {

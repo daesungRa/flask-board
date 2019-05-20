@@ -1,3 +1,7 @@
+/* font */
+@import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding|Nanum+Myeongjo&display=swap');
+
 /* triangle icon */
 .triangle {display:inline-block; width:0; height:0; border-style:solid; border-width:6px;}
 .triangle.underbar {
