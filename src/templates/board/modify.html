@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="board-guide">
+        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/boardList/">목록으로</a>
+    </div>
+    <br/><hr/>
+    <div class="write-container">
+        <span>수정하기</span>
+        <span>(사용자 정보 출력)</span>
+        <hr>
+        <form class="form-group write-form" method="post">
+            <input name="title" type="text" class="form-control" value="(이전에 입력한 글 제목)" />
+            <input name="author" type="text" class="form-control" value="(작성자 이름)" readonly />
+            <input name="created" type="text" class="form-control" value="{{ currTime }} 수정시각" readonly />
+            <textarea name="body" class="summernote" name="editordata">(이전에 입력한 글 내용)</textarea>
+            <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
+            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/getViewPage/'">돌아가기</button>
+        </form>
+    </div>
+    <hr/>
+
+    <script>
+        $(document).ready(function () {
+            convertPage($('.masthead-nav > #gotoBoard'));
+
+            $('.summernote').summernote({
+                placeholder: '내용 입력',
+                tabsize: 2,
+                height: 200,
+                minHeight: 200,
+                maxHeight: null,
+                focus: true
+            });
+
+            $('.write-form #write-submit').on('click', function() {
+                alert('제출한다!');
+            });
+        });
+    </script>
+{% endblock %}

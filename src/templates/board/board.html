@@ -1,6 +1,9 @@
 {% extends "base.html" %}
 {% block content %}
-    <hr/>
+    <div class="board-guide">
+        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/getWritePage/">글쓰기</a>
+    </div>
+    <br/><hr/>
     <div class="container-fluid table-board">
         <div class="row table-head">
             <span class="col-md-2 tcontent-id">ID</span>
@@ -24,8 +27,13 @@
         {% endif %}
     </div>
     <hr/>
-    <a href="#" class="btn btn-lg btn-default btn-test">Learn more!</a><br/><br/>
-    <a href="http://localhost:5000/todos/" class="btn btn-sm btn-default">TODOS</a>
+    <!-- 동 페이지에서 ajax 로 처리할 것! 페이지 흐름에 대한 고려도 필요함 -->
     <a href="http://localhost:5000/boardList/" class="btn btn-sm btn-default">BOARDS</a>
-    <a href="http://localhost:5000/emptyTest/" class="btn btn-sm btn-default">EMPTY LIST</a>
+    <a href="http://localhost:5000/todos/" class="btn btn-sm btn-default">TODOS</a>
+
+    <script>
+        $(document).ready(function () {
+            convertPage($('.masthead-nav > #gotoBoard'));
+        });
+    </script>
 {% endblock %}

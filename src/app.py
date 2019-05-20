@@ -2,6 +2,7 @@ from flask import Flask, request, Response, make_response, render_template, json
 from flask_cors import CORS
 from json import dumps, loads
 from src.models import todo
+import datetime
 
 app = Flask(__name__)
 CORS(app)
@@ -10,26 +11,34 @@ todo = todo.Todo()
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
-    result = todo.find({}, 'boards')
+    return render_template('index.html'), 200
 
-    ## return render_template('index.html'), 200
-    return render_template('index.html', result_list=result), 200
+@app.route("/contact/", methods=['GET', 'POST'])
+def contact():
+    return render_template('contact.html'), 200
 
-@app.route('/emptyTest/', methods=['GET'])
-def emptyTest():
-    result = todo.find({}, 'empty_table')
-    # print(type(result)) # type of list
-
-    ## return jsonify(todo.find({})), 200
-    return render_template('board.html', result_list=result), 200
-
+# board routes
 @app.route('/boardList/', methods=['GET'])
 def get_boardList():
     result = todo.find({}, 'boards')
     # print(type(result)) # type of list
 
     ## return jsonify(todo.find({})), 200
-    return render_template('board.html', result_list=result), 200
+    return render_template('board/board.html', result_list=result), 200
+
+@app.route('/getViewPage/', methods=['GET'])
+def getViewPage():
+    return render_template('board/boardView.html'), 200
+
+@app.route('/getWritePage/', methods=['GET'])
+def getWritePage():
+    currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
+    return render_template('board/write.html', currTime=currTime), 200
+
+@app.route('/getModifyPage/', methods=['GET'])
+def getModifyPage():
+    currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
+    return render_template('board/modify.html', currTime=currTime), 200
 
 # todo routes
 @app.route('/todos/', methods=['GET'])
@@ -38,7 +47,7 @@ def get_tasks():
     # print(type(result)) # type of list
 
     ## return jsonify(todo.find({})), 200
-    return render_template('board.html', result_list=result), 200
+    return render_template('board/board.html', result_list=result), 200
 
 @app.route('/todos/<string:todo_id>/', methods=['GET'])
 def get_task(todo_id):

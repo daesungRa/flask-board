@@ -2,7 +2,7 @@
 {% block content %}
     <hr/>
     <div>
-        <p class="index-title">Google</p>
+        <p class="index-title">Welcome!</p>
         <div>
             <form class="form-group" id="fakebox">
                 <input class="form-control search-bar" type="text" placeholder="Search Google or type a URL" />
@@ -10,10 +10,32 @@
             </form>
         </div>
         <div class="shortcut-container">
-            <a class="shortcut-link">
-                <img class="shortcut-img" src="{{ url_for('static', filename='imgs/gitcat01.png') }}" title="" alt="" />
+            <a class="shortcut-link" href="https://github.com/daesungra" title="daesungra-github" target="_blank">
+                <div class="shortcut" title="daesungra-github">
+                    <img class="shortcut-img" src="{{ url_for('static', filename='imgs/gitcat01.png') }}" title="daesungra-github" alt="daesungra-github" />
+                </div>
+                <div class="shortcut-title" title="daesungra-github">
+                    daesungra
+                </div>
+                <div class="shortcut-settings" href="localhost:5000/" title="shortcut-settings">
+                    ...
+                </div>
+            </a>
+            <a class="shortcut-link" href="#" title="#" target="">
+                <div class="shortcut-add" title="add shortcut">
+                    +
+                </div>
+                <div class="shortcut-title" title="add shortcut">
+                    add shortcut
+                </div>
             </a>
         </div>
     </div>
     <hr/>
+
+    <script>
+        $(document).ready(function () {
+            convertPage($('.masthead-nav > #gotoHome'));
+        });
+    </script>
 {% endblock %}

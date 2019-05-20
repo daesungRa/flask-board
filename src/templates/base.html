@@ -28,85 +28,40 @@
     </head>
     <body>
         <div class="inner">
-            <h3 class="masthead-brand">Flask Board</h3>
+            <h3 class="masthead-brand" onclick="location.href='http://localhost:5000/'">Flask Board</h3>
             <nav>
                 <ul class="nav masthead-nav">
-                    <li class="active"><a href="#">Home</a></li>
-                    <li><a href="#">Board</a></li>
-                    <li><a href="#">Contact</a></li>
+                    <li id="gotoHome"><a href="http://localhost:5000/">Home</a></li>
+                    <li id="gotoBoard"><a href="http://localhost:5000/boardList/">Board</a></li>
+                    <li id="gotoContact"><a href="http://localhost:5000/contact/">Contact</a></li>
                 </ul>
             </nav>
         </div>
         <div class="site-wrapper">
             <div class="site-wrapper-inner">
                 <div class="cover-container">
-                    <!--<div class="masthead clearfix">
-                        <div class="inner">
-                            <h3 class="masthead-brand">Flask Board</h3>
-                            <nav>
-                                <ul class="nav masthead-nav">
-                                    <li class="active"><a href="#">Home</a></li>
-                                    <li><a href="#">Board</a></li>
-                                    <li><a href="#">Contact</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>-->
-
                     <div class="inner cover">
                         {% block content %}
                         {% endblock %}
                     </div>
-
-                    <div class="mastfoot">
-
-                    </div>
                 </div>
             </div>
-
-
-
-
-
-            <!--
-            &lt;!&ndash; nav part &ndash;&gt;
-            <nav>//nav part//</nav><br/>
-
-            <br/>
-
-            &lt;!&ndash;<div>
-                <h3>text part</h3>
-                <div class="summernote"><p></p></div>
-            </div>&ndash;&gt;
-
-            <div>
-                <h3>text part on form tag</h3>
-                <form method="post">
-                    <textarea class="summernote" name="editordata"></textarea>
-                </form>
-            </div>
-
-            &lt;!&ndash; footer part &ndash;&gt;
-            <br/>
-            <footer>//footer part//</footer>
-            -->
         </div>
-
         <div class="inner">
             <p>&copy; copyright <a href="#">everyone</a>, by <a href="https://github.com/daesungRa" target="_blank">@rds</a>.</p>
         </div>
-
-        <script>
-            $(document).ready(function() {
-                $('.summernote').summernote({
-                    placeholder: 'hi, summernote!!',
-                    tabsize: 2,
-                    height: 200,
-                    minHeight: 200,
-                    maxHeight: null,
-                    focus: true
-                });
-            });
-        </script>
     </body>
 </html>
+
+<!--<div class="masthead clearfix">
+    <div class="inner">
+        <h3 class="masthead-brand">Flask Board</h3>
+        <nav>
+            <ul class="nav masthead-nav">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="#">Board</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>-->

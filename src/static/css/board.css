@@ -1,4 +1,15 @@
 /*
+ * board guide style
+ */
+.board-guide {
+    width: 100px;
+    float: right;
+}
+.board-guide .btn-default {
+    float: right;
+}
+
+/*
  * board list style (table)
  */
 .cover .table-board, .cover .table-head, .cover .table-body {
@@ -38,3 +49,27 @@
 .cover .notFound {
     margin-top: 30px;
 }
+
+/*
+ * write page
+ */
+.write-container {
+    text-align: left;
+    background-color: #fff;
+    padding: 20px 15px 20px 15px;
+    border: 1px solid #ababab;
+}
+.write-container > span:first-child {
+    font-size: 18pt;
+}
+.write-container > span {
+    font-size: 8pt;
+}
+.write-container > .write-form > input, select {
+    margin-bottom: 10px;
+}
+.write-container > .write-form > button {
+    margin-top: 10px;
+}
+
+

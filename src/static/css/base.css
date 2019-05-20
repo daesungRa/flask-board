@@ -84,8 +84,8 @@ body {
     border-bottom-color: rgba(255,255,255,.25);
 }
 .masthead-nav > .active > a, .masthead-nav > .active > a:hover, .masthead-nav > .active > a:focus {
-    color: #acacac;
-    border-bottom-color: #acacac;
+    color: #797979;
+    border-bottom-color: #797979;
 }
 @media (min-width: 768px) {
     .masthead-brand {

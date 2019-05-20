@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="board-guide">
+        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/boardList/">목록으로</a>
+    </div>
+    <br/><hr/>
+    <div class="write-container">
+        <span>새 글 쓰기</span>
+        <span>(사용자 정보 출력)</span>
+        <hr>
+        id, title, body, author, created, updated
+        <button type="button" class="btn btn-sm btn-default" id="getModifyPage">수정하기</button>
+        <button type="button" class="btn btn-sm btn-default">삭제하기</button>
+    </div>
+    <hr/>
+
+    <script>
+        $(document).ready(function () {
+            convertPage($('.masthead-nav > #gotoBoard'));
+
+            $('.write-container #getModifyPage').on('click', function() {
+                location.href="http://localhost:5000/getModifyPage/"
+            });
+        });
+    </script>
+{% endblock %}
