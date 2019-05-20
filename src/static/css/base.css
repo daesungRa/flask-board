@@ -1,3 +1,11 @@
+/* triangle icon */
+.triangle {display:inline-block; width:0; height:0; border-style:solid; border-width:6px;}
+.triangle.underbar {
+    border-color:#000 transparent transparent transparent;
+}
+.triangle.underbar:hover {
+    border-color:#797979 transparent transparent transparent;
+}
 
 /* Links */
 a, a:focus, a:hover {
@@ -86,6 +94,13 @@ body {
 .masthead-nav > .active > a, .masthead-nav > .active > a:hover, .masthead-nav > .active > a:focus {
     color: #797979;
     border-bottom-color: #797979;
+}
+.masthead-nav > #account-management:hover {
+    color: #797979;
+    cursor: pointer;
+}
+.masthead-nav > #account-management > .account-dropdown {
+    display: inline-block;
 }
 @media (min-width: 768px) {
     .masthead-brand {
