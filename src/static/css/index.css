@@ -1,0 +1,59 @@
+.index-title {
+    font-size: 48pt;
+}
+.search-bar {
+    border-radius: 20px;
+    padding-left: 25px;
+}
+#fakebox {
+    background-color: rgb(var(--GG100-rgb));
+    border-radius: 22px;
+    cursor: text;
+    font-size: 18px;
+    height: 44px;
+    line-height: 36px;
+    margin: 0 auto;
+    max-width: 560px;
+    opacity: 1;
+    position: relative;
+    transition: background-color 300ms ease-in-out, opacity 200ms;
+}
+#fakebox-microphone {
+    background: url(http://localhost:5000/static/imgs/mic01.png) no-repeat center;
+    background-size: 12px 18px;
+    bottom: 0;
+    cursor: pointer;
+    margin-inline-end: 12px;
+    padding: 22px 12px 0;
+    position: absolute;
+    right: 0;
+    top: -6px;
+    width: 24px;
+    border: none;
+}
+.shortcut-container {
+    text-align: center;
+    width: 100%;
+    margin: 40px 0 40px 0;
+}
+.shortcut-link {
+    display: inline-block;
+    width: 100px;
+    height: 120px;
+    border-radius: 5px;
+}
+.shortcut-link:hover {
+    background-color: #fff9fa;
+    cursor: pointer;
+}
+.shortcut-img {
+    width: 30px;
+    height: 35px;
+}
+
+
+
+
+
+
+
