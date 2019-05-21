@@ -16,12 +16,13 @@ class Validator(object):
 
     def validateTypes(self, element, fields):
         for field in fields:
-            if field in element:
-                if not self.validate_type(element[field], fields[field]):
+            if field in element: # element key check
+                if not self.validate_type(element[field], fields[field]): # element type check
                     return False
             return True
 
     def validate(self, element, fields, required_fields, optional_fields):
+        # 유효성 체크 fail 시
         if not self.validateTypes(element, fields):
             raise ValueError("Invalid type of field")
 

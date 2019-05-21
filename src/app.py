@@ -1,13 +1,13 @@
 from flask import Flask, request, Response, make_response, render_template, jsonify
 from flask_cors import CORS
 from json import dumps, loads
-from src.models import board
+from src.models import service
 import datetime
 
 app = Flask(__name__)
 CORS(app)
 
-board = board.Board()
+board = service.Board_sevice()
 
 @app.route("/", methods=['GET', 'POST'])
 def home():
@@ -20,10 +20,7 @@ def contact():
 # board routes
 @app.route('/boards/', methods=['GET'])
 def boards():
-    result = board.find({}, 'boards')
-    # print(type(result)) # type of list
-
-    ## return jsonify(board.find({})), 200
+    result = board.find({}, 'boards') # type of list
     return render_template('board/board.html', result_list=result, subject='Board List'), 200
 
 @app.route('/view/', methods=['GET'])
@@ -37,7 +34,7 @@ def write():
         return render_template('board/write.html', currTime=currTime), 200
     else:
         # write logic
-        pass
+        return '1'
 
 @app.route('/modify/', methods=['GET', 'POST'])
 def modify():
@@ -122,7 +119,7 @@ def page_not_found(error):
     return render_template('error/404.html'), 200
 
 @app.errorhandler(500)
-def page_not_found(error):
+def server_side_error(error):
     return render_template('error/500.html'), 200
 
 if __name__ == '__main__':
