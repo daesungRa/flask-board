@@ -64,9 +64,14 @@ def modify(id=None):
 
 @app.route('/board/delete/', methods=['POST'])
 def delete():
-    id = request.args.get('id', None)
-    print(id)
-    return '0'
+    # _id = request.values.get('_id')
+    _id = request.form['_id']
+    result = board.delete(_id, 'boards')
+
+    if result:
+        return '1'
+    else:
+        return '0'
 
 # todo routes
 @app.route('/todos/', methods=['GET'])

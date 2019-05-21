@@ -89,6 +89,7 @@
 .view-container {
     position: relative;
     text-align: left;
+    text-shadow: none;
     min-height: 500px;
     background-color: #fff;
     padding: 20px 15px 20px 15px;
