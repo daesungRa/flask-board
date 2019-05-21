@@ -2,18 +2,18 @@ from flask import Flask, request, Response, make_response, render_template, json
 from flask_cors import CORS
 from json import dumps, loads
 from src.models import service
-import datetime
+from datetime import datetime
 
 app = Flask(__name__)
 CORS(app)
 
 board = service.Board_sevice()
 
-@app.route("/", methods=['GET', 'POST'])
+@app.route("/", methods=['GET'])
 def home():
     return render_template('index.html'), 200
 
-@app.route("/contact/", methods=['GET', 'POST'])
+@app.route("/contact/", methods=['GET'])
 def contact():
     return render_template('contact.html'), 200
 
@@ -23,40 +23,55 @@ def boards():
     result = board.find({}, 'boards') # type of list
     return render_template('board/board.html', result_list=result, subject='Board List'), 200
 
-@app.route('/view/', methods=['GET'])
-def view():
-    return render_template('board/boardView.html'), 200
+@app.route('/board/view/<string:id>', methods=['GET'])
+def view(id=None):
+    result = board.find_by_id(id, 'boards')
+    return render_template('board/boardView.html', result=result), 200
 
 @app.route('/board/write/', methods=['GET', 'POST'])
 def write():
     if request.method == 'GET':
-        currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
+        currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
         return render_template('board/write.html', currTime=currTime), 200
     else:
-        # write logic
-        return '1'
+        title = request.form['title']
+        author = request.form['author']
+        content = request.form['content']
 
-@app.route('/modify/', methods=['GET', 'POST'])
-def modify():
+        result = board.create({'title': title, 'author': author, 'content': content}, 'boards')
+        if result is not None:
+            return '1'
+        else:
+            return '0'
+
+@app.route('/board/modify/<string:id>', methods=['GET'])
+@app.route('/board/modify/', methods=['POST'])
+def modify(id=None):
     if request.method == 'GET':
-        currTime = datetime.datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/modify.html', currTime=currTime), 200
+        result = board.find_by_id(id, 'boards')
+        result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
+        return render_template('board/modify.html', result=result), 200
     else:
-        pass
+        id = request.form['_id']
+        title = request.form['title']
+        content = request.form['content']
 
-@app.route('/delete/', methods=['POST'])
+        result = board.update(id, {'title': title, 'content': content}, 'boards')
+        if result is not None:
+            return result
+        else:
+            return None
+
+@app.route('/board/delete/', methods=['POST'])
 def delete():
     pass
 
 # todo routes
 @app.route('/todos/', methods=['GET'])
 def get_tasks():
-    result = board.find({}, 'todos')
-    # print(type(result)) # type of list
+    result = board.find({}, 'todos') # type of todo list
+    return render_template('todo/todo.html', result_list=result, subject='Todo List'), 200
 
-    ## return jsonify(board.find({})), 200
-    return render_template('board/board.html', result_list=result, subject='Todo List'), 200
-#
 # @app.route('/todos/<string:todo_id>/', methods=['GET'])
 # def get_task(todo_id):
 #     # 입력받은 아이디에 해당하는 도큐먼트를 find 해서(결과는 dict 타입)
@@ -114,6 +129,7 @@ def get_tasks():
 #         todo.delete(todo_id)
 #         return "Record Deleted"
 
+# error routes
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('error/404.html'), 200

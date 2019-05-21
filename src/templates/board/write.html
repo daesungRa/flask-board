@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="board-guide">
-        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/boards/">목록으로</a>
+    <div class="board-guide"> <!-- 모듈화 하기! -->
+        <a class="btn btn-sm btn-default" href="http://localhost:5000/boards/">목록으로</a>
     </div>
     <br/><hr/>
     <div class="write-container">
@@ -19,7 +19,7 @@
             <input name="created" type="text" class="form-control created" value="{{ currTime }}" readonly />
             <textarea name="content" class="summernote content"></textarea>
             <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/view/'">뷰 페이지(임시)</button>
+            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/board/view/'">뷰 페이지(임시)</button>
         </form>
     </div>
     <hr/>

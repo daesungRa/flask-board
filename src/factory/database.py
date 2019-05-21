@@ -11,9 +11,10 @@ class Database(object):
         self.db = self.client[config['db']['name']]
 
     def insert(self, element, collection_name):
-        element["created"] = datetime.now()
+        element["created"] = datetime.now().strftime('%Y%m%d %H:%M:%S')
         element["updated"] = element['created']
         inserted = self.db[collection_name].insert_one(element)
+        print('db insert 결과 : ' + str(inserted))
         return str(inserted.inserted_id)
 
     def find(self, criteria, collection_name, projection=None, sort=None, limit=0, cursor=False):
@@ -46,12 +47,15 @@ class Database(object):
     def update(self, id, element, collection_name):
         criteria = {"_id": ObjectId(id)}
 
-        element["updated"] = datetime.now()
+        element["updated"] = datetime.now().strftime('%Y%m%d %H:%M:%S')
         set_obj = {"$set": element} # update value
 
         updated = self.db[collection_name].update_one(criteria, set_obj)
         if updated.matched_count == 1:
-            return "Record Successfully Updated"
+            # return "Record Successfully Updated"
+            return id
+        else:
+            return None
 
     def delete(self, id, collection_name):
         deleted = self.db[collection_name].delete_one({"_id": ObjectId(id)})

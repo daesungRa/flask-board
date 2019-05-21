@@ -18,3 +18,29 @@ function writeAction(form) {
         }
     });
 }
+
+// get view, modify page
+function getDocument(uri, id) {
+    location.href = 'http://localhost:5000/' + uri + id;
+}
+
+function modifyAction(form) {
+    var formData = form.serialize();
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost:5000/board/modify/',
+        data: formData,
+        dataType: 'text',
+        success: function(data) {
+            if (data != null && data.length > 0) {
+                location.href = 'http://localhost:5000/board/view/' + data;
+            } else if (data == null) {
+                alert('글 수정에 실패했습니다. 다시 시도하세요.');
+                $('.write-form .title').focus();
+                $('.write-form .title').select();
+            } else {
+                alert('글 수정에 실패했습니다. 관리자에게 문의하세요.');
+            }
+        }
+    });
+}

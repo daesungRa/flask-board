@@ -30,8 +30,10 @@ class Validator(object):
         required_fields = set(required_fields)
         optional_fields = set(optional_fields)
 
+        # 필수 field 부재시
         if len(required_fields - element_fields) > 0:
             raise ValueError("Required field missing")
 
+        # 명시되지 않은 필드 포함시
         if len(element_fields - (required_fields | optional_fields)) > 0:
             raise ValueError("Invalid field in element")

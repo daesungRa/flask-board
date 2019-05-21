@@ -1,24 +1,24 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="board-guide">
+    <div class="board-guide"> <!-- 모듈화 하기! -->
         <div class="subject">{{ subject }}</div>
-        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/board/write/">글쓰기</a>
+        <a class="btn btn-sm btn-default" href="http://localhost:5000/board/write/">글쓰기</a>
     </div>
     <br/><hr/>
     <div class="container-fluid table-board">
         <div class="row table-head">
-            <span class="col-md-2 tcontent-id">ID</span>
-            <span class="col-md-6 tcontent-title">TITLE</span>
-            <span class="col-md-2 tcontent-created">CREATED</span>
-            <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">UPDATED</span>
+            <span class="col-md-6">TITLE</span>
+            <span class="col-md-2">AUTHOR</span>
+            <span class="col-md-2">CREATED</span>
+            <span class="col-md-2" style="border-right: 1px solid #787878;">UPDATED</span>
         </div>
         {% if result_list %}
             {% for result in result_list %}
-                <div class="row table-body">
-                    <span class="col-md-2 tcontent-id">{{ result._id.split('.')[0] }}</span>
-                    <span class="col-md-6 tcontent-title">{{ result.title }}</span>
-                    <span class="col-md-2 tcontent-created">{{ result.created }}</span>
-                    <span class="col-md-2 tcontent-updated" style="border-right: 1px solid #787878;">{{ result.updated }}</span>
+                <div class="row table-body" id="{{ result._id }}">
+                    <span class="col-md-6">{{ result.title }}</span>
+                    <span class="col-md-2">{{ result.author }}</span>
+                    <span class="col-md-2">{{ result.created.split(' ')[0] }}</span>
+                    <span class="col-md-2" style="border-right: 1px solid #787878;">{{ result.updated.split(' ')[0] }}</span>
                 </div>
             {% endfor %}
         {% else %}
@@ -35,6 +35,10 @@
     <script>
         $(document).ready(function () {
             convertPage($('.masthead-nav > #gotoBoard'));
+
+            $('.table-board .table-body').on('click', function() {
+                getDocument('board/view/', this.id);
+            });
         });
     </script>
 {% endblock %}

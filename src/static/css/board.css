@@ -10,6 +10,7 @@
 }
 .board-guide .btn-default {
     float: right;
+    margin-left: 5px;
 }
 
 /*
@@ -20,6 +21,8 @@
 }
 .cover .table-board {
     margin: 40px 0 40px 0;
+    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Nanum Gothic Coding', monospace;
 }
 .cover .table-head {
     border-bottom: 1px solid #ccc;
@@ -34,6 +37,7 @@
     cursor: pointer;
 }
 .cover .table-board span {
+    font-size: 10pt;
     border-left: 1px solid #787878;
 }
 
@@ -63,7 +67,7 @@
     border: 1px solid #ababab;
 }
 .write-container > span:first-child {
-    font-size: 18pt;
+    font-size: 16pt;
 }
 .write-container > span {
     font-size: 8pt;
@@ -77,6 +81,56 @@
 }
 .write-container > .write-form > button {
     margin-top: 10px;
+}
+
+/*
+ * view page
+ */
+.view-container {
+    position: relative;
+    text-align: left;
+    min-height: 500px;
+    background-color: #fff;
+    padding: 20px 15px 20px 15px;
+    border: 1px solid #ababab;
+}
+.view-container > span:first-child {
+    font-size: 14pt;
+}
+.view-container > span {
+    font-size: 8pt;
+}
+.view-container > .view-left {
+    width: 82%;
+    margin-bottom: 20px;
+}
+.view-container > .view-right {
+    position: absolute;
+    text-align: center;
+    right: 4%;
+    top: 65px;
+    width: 16%;
+    height: 85%;
+    padding-top: 30px;
+    border-left: 1px solid #ddd;
+}
+.view-container > .view-right > button {
+    display: inline-block;
+    margin-bottom: 5px;
+}
+.view-container .view-head {
+    position: relative;
+    margin-bottom: 10px;
+}
+.view-container .view-head > div {
+    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Nanum Gothic Coding', monospace;
+}
+.view-container .view-head > .view-id {
+    font-size: 8pt;
+}
+.view-container .view-head > .view-title {
+    font-size: 18pt;
 }
 
 

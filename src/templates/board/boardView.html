@@ -1,23 +1,41 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="board-guide">
-        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/boards/">목록으로</a>
+    <div class="board-guide"> <!-- 모듈화 하기! -->
+        <a class="btn btn-sm btn-default" href="http://localhost:5000/boards/">목록으로</a>
+        <a class="btn btn-sm btn-default" href="http://localhost:5000/board/write/">글쓰기</a>
     </div>
     <br/><hr/>
-    <div class="write-container">
-        <span>게시글 보기</span>
-        <span>(게시판 종류, 사용자 정보 출력)</span>
+    <div class="view-container" id="{{ result._id }}">
+        <span>(icon) 게시글 보기</span>
+        <span>{{ result.author }} (사용자정보)</span>
         <hr>
-        id, title, content, author, created, updated
-        <button type="button" class="btn btn-sm btn-default" id="getModifyPage">수정하기</button>
-        <button type="button" class="btn btn-sm btn-default" id="deleteAction">삭제하기</button>
+        <div class="view-left">
+            <div class="view-head">
+                <div class="view-id">
+                    {{ '#' + result._id[:5] + '***' + result._id[19:24] }}
+                </div>
+                <div class="view-title">
+                    {{ result.title }}
+                </div>
+            </div>
+            <hr/>
+            <div class="view-body">
+                <div class="view-content">
+                    {{ result.content }}
+                </div>
+            </div>
+        </div>
+        <div class="view-right">
+            <button type="button" class="btn btn-sm btn-default" id="getModifyPage">수정</button><br/>
+            <button type="button" class="btn btn-sm btn-default" id="deleteAction">삭제</button>
+        </div>
     </div>
     <hr/>
     <div class="write-container">
-        <span>(댓글 파트)</span>
+        <span>(댓글 파트) - 모듈화할 것</span>
         <hr>
         댓글 순서대로 보여주고,<br/>
-        댓글 쓰기 위치한다. (댓글 crud)<br/>
+        하단에 댓글 쓰기 위치한다. (댓글 crud)<br/>
         댓글은 ajax 로 처리!<br/>
         <button type="button" class="btn btn-sm btn-default">댓글쓰기</button>
     </div>
@@ -26,11 +44,10 @@
     <script>
         $(document).ready(function () {
             convertPage($('.masthead-nav > #gotoBoard'));
-
-            $('.write-container #getModifyPage').on('click', function() {
-                location.href="http://localhost:5000/modify/"
+            $('.view-container #getModifyPage').on('click', function() {
+                getDocument('board/modify/', $('.view-container').attr('id'));
             });
-            $('.write-container #deleteAction').on('click', function() {
+            $('.view-container #deleteAction').on('click', function() {
                 alert('삭제 액션!');
             });
         });

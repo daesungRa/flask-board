@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-    <div class="board-guide">
-        <a class="btn btn-sm btn-default" id="write-page" href="http://localhost:5000/boards/">목록으로</a>
+    <div class="board-guide"> <!-- 모듈화 하기! -->
+        <a class="btn btn-sm btn-default" href="http://localhost:5000/boards/">목록으로</a>
     </div>
     <br/><hr/>
     <div class="write-container">
@@ -9,12 +9,14 @@
         <span>(사용자 정보 출력)</span>
         <hr>
         <form class="form-group write-form" method="post">
-            <input name="title" type="text" class="form-control title" value="(이전에 입력한 글 제목)" />
-            <input name="author" type="text" class="form-control author" value="testUser" readonly />
-            <input name="updated" type="text" class="form-control updated" value="{{ currTime }} 수정시각" readonly />
-            <textarea name="content" class="summernote content">(이전에 입력한 글 내용)</textarea>
+            <input name="_id" type="text" class="form-control" value="{{ result._id }}" style="display:none;" />
+            <input name="board-type" type="text" class="form-control" value="게시글" readonly />
+            <input name="title" type="text" class="form-control title" value="{{ result.title }}" />
+            <input name="author" type="text" class="form-control author" value="{{ result.author }}" readonly />
+            <input name="updated" type="text" class="form-control updated" value="{{ result.updated }}" readonly />
+            <textarea name="content" class="summernote content">{{ result.content }}</textarea>
             <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/view/'">돌아가기</button>
+            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/board/view/'">돌아가기</button>
         </form>
     </div>
     <hr/>
@@ -33,7 +35,7 @@
             });
 
             $('.write-form #write-submit').on('click', function() {
-                alert('제출한다!');
+                modifyAction($('.write-form'));
             });
         });
     </script>
