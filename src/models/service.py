@@ -2,7 +2,7 @@ from src.factory.validation import Validator
 from src.factory.database import Database
 
 # 본래 이름은 board
-class Board_sevice(object):
+class Service(object):
     def __init__(self):
         self.validator = Validator()
         self.db = Database()

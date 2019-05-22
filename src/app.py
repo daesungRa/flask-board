@@ -7,7 +7,7 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-board = service.Board_sevice()
+board = service.Service()
 
 @app.route("/", methods=['GET'])
 def home():

@@ -16,7 +16,7 @@
             <input name="updated" type="text" class="form-control" value="{{ result.updated }}" readonly />
             <textarea name="content" class="summernote">{{ result.content }}</textarea>
             <button type="button" class="btn btn-sm btn-default" id="modify-submit">제 출</button>
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/board/view/'">돌아가기</button>
+            <button type="button" class="btn btn-sm btn-default" id="prePage" onclick="location.href='http://localhost:5000/{% if subject == 'Todo Modify': %}todo{% else %}board{% endif %}/view/{{ result._id }}'">돌아가기</button>
         </form>
     </div>
     <hr/>
@@ -47,6 +47,17 @@
                 getDocument(pre_uri, '');
             });
 
+            // go to previous page
+            $('.modify-form #prePage').on('click', function() {
+                var decision = confirm('작성 데이터는 사라집니다. 이전 페이지로 돌아가시겠습니까?');
+                if (decision) {
+                    history.back();
+                } else {
+                    alert('canceled');
+                }
+            });
+
+            // modify action
             $('.modify-form #modify-submit').on('click', function() {
                 modifyAction($('.modify-form'), highlight);
             });

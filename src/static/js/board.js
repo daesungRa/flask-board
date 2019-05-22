@@ -1,3 +1,8 @@
+// get view, modify page
+function getDocument(uri, id) {
+    location.href = 'http://localhost:5000/' + uri + id;
+}
+
 function writeAction(form, highlight) {
     highlight = highlight.toLowerCase();
     var formData = form.serialize();
@@ -19,11 +24,6 @@ function writeAction(form, highlight) {
             }
         }
     });
-}
-
-// get view, modify page
-function getDocument(uri, id) {
-    location.href = 'http://localhost:5000/' + uri + id;
 }
 
 function modifyAction(form, highlight) {

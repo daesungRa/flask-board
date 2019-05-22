@@ -12,7 +12,7 @@
         <div class="view-left">
             <div class="view-head">
                 <div class="view-component" style="background-color: #fff;">
-                    {{ '#' + result._id[:5] + '***' + result._id[19:24] }}
+                    {{ '# ' + result._id[:5] + '***' + result._id[19:24] }}
                 </div>
                 <div class="view-title">
                     {{ result.title }}
@@ -27,7 +27,7 @@
             <hr/>
             <div class="view-body">
                 <div class="view-content">
-                    {{ result.content }}
+
                 </div>
             </div>
         </div>
@@ -49,6 +49,8 @@
 
     <script>
         $(document).ready(function () {
+            alert($.parseHTML('{{ result.content }}'))
+
             var highlight = 'Board';
             var pre_uri = 'board/';
             var post_uri = '';
@@ -76,7 +78,12 @@
                 getDocument(pre_uri + post_uri, $('.view-container').attr('id'));
             });
             $('.view-container #deleteAction').on('click', function() {
-                deleteAction($('.view-container').attr('id'), highlight);
+                var decision = confirm('삭제하시겠습니까?');
+                if (decision) {
+                    deleteAction($('.view-container').attr('id'), highlight);
+                } else {
+                    alert('canceled');
+                }
             });
         });
     </script>
