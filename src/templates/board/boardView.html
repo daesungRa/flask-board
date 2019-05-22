@@ -1,8 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="board-guide"> <!-- 모듈화 하기! -->
-        <a class="btn btn-sm btn-default" href="http://localhost:5000/boards/">목록으로</a>
-        <a class="btn btn-sm btn-default" href="http://localhost:5000/board/write/">글쓰기</a>
+        <button class="btn btn-sm btn-default" id="gotoListPage">목록으로</button>
+        <button class="btn btn-sm btn-default" id="gotoWritePage">글쓰기</button>
     </div>
     <br/><hr/>
     <div class="view-container" id="{{ result._id }}">
@@ -11,11 +11,17 @@
         <hr>
         <div class="view-left">
             <div class="view-head">
-                <div class="view-id">
+                <div class="view-component" style="background-color: #fff;">
                     {{ '#' + result._id[:5] + '***' + result._id[19:24] }}
                 </div>
                 <div class="view-title">
                     {{ result.title }}
+                </div>
+                <div class="view-component">
+                    created : {{ result.created }}
+                </div>
+                <div class="view-component">
+                    updated : {{ result.updated }}
                 </div>
             </div>
             <hr/>
@@ -43,12 +49,34 @@
 
     <script>
         $(document).ready(function () {
-            convertPage($('.masthead-nav > #gotoBoard'));
+            var highlight = 'Board';
+            var pre_uri = 'board/';
+            var post_uri = '';
+
+            if ('{{ subject }}' == 'Todo View') {
+                highlight = 'Todo';
+                pre_uri = 'todo/';
+            }
+
+            convertPage($('.masthead-nav > #goto' + highlight));
+
+            // go to write page
+            $('.board-guide #gotoWritePage').on('click', function() {
+                post_uri = 'write/';
+                getDocument(pre_uri + post_uri, '');
+            });
+
+            // go to list page
+            $('.board-guide #gotoListPage').on('click', function() {
+                getDocument(pre_uri.split('/')[0] + 's', '');
+            });
+
             $('.view-container #getModifyPage').on('click', function() {
-                getDocument('board/modify/', $('.view-container').attr('id'));
+                post_uri = 'modify/';
+                getDocument(pre_uri + post_uri, $('.view-container').attr('id'));
             });
             $('.view-container #deleteAction').on('click', function() {
-                deleteAction($('.view-container').attr('id'));
+                deleteAction($('.view-container').attr('id'), highlight);
             });
         });
     </script>

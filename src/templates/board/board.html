@@ -2,7 +2,7 @@
 {% block content %}
     <div class="board-guide"> <!-- 모듈화 하기! -->
         <div class="subject">{{ subject }}</div>
-        <a class="btn btn-sm btn-default" href="http://localhost:5000/board/write/">글쓰기</a>
+        <button class="btn btn-sm btn-default" id="gotoWritePage">글쓰기</button>
     </div>
     <br/><hr/>
     <div class="container-fluid table-board">
@@ -34,10 +34,27 @@
 
     <script>
         $(document).ready(function () {
-            convertPage($('.masthead-nav > #gotoBoard'));
+            var highlight = 'Board';
+            var pre_uri = 'board/';
+            var post_uri = '';
 
+            if ('{{ subject }}' == 'Todo List') {
+                highlight = 'Todo';
+                pre_uri = 'todo/';
+            }
+
+            convertPage($('.masthead-nav > #goto' + highlight));
+
+            // go to write page
+            $('.board-guide #gotoWritePage').on('click', function() {
+                post_uri = 'write/';
+                getDocument(pre_uri + post_uri, '');
+            });
+
+            // go to view page
             $('.table-board .table-body').on('click', function() {
-                getDocument('board/view/', this.id);
+                post_uri = 'view/';
+                getDocument(pre_uri + post_uri, this.id);
             });
         });
     </script>

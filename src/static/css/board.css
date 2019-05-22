@@ -127,11 +127,40 @@
     font-family: 'Nanum Myeongjo', serif;
     font-family: 'Nanum Gothic Coding', monospace;
 }
-.view-container .view-head > .view-id {
-    font-size: 8pt;
+.view-container .view-head > .view-component {
+    font-size: 7pt;
+    width: 155px;
+    background-color: #fffdfd;
+    padding-left: 10px;
 }
 .view-container .view-head > .view-title {
     font-size: 18pt;
+}
+
+/*
+ * write page
+ */
+.modify-container {
+    text-align: left;
+    background-color: #fff;
+    padding: 20px 15px 20px 15px;
+    border: 1px solid #ababab;
+}
+.modify-container > span:first-child {
+    font-size: 16pt;
+}
+.modify-container > span {
+    font-size: 8pt;
+}
+.modify-container > .modify-form > input, select {
+    font-size: 10pt;
+    font-weight: bolder;
+    font-family: 'Nanum Myeongjo', serif;
+    font-family: 'Nanum Gothic Coding', monospace;
+    margin-bottom: 10px;
+}
+.modify-container > .modify-form > button {
+    margin-top: 10px;
 }
 
 

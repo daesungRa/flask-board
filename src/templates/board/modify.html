@@ -1,21 +1,21 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="board-guide"> <!-- 모듈화 하기! -->
-        <a class="btn btn-sm btn-default" href="http://localhost:5000/boards/">목록으로</a>
+        <button class="btn btn-sm btn-default" id="gotoListPage">목록으로</button>
     </div>
     <br/><hr/>
-    <div class="write-container">
-        <span>수정하기</span>
+    <div class="modify-container">
+        <span>{{ subject }}</span>
         <span>(사용자 정보 출력)</span>
         <hr>
-        <form class="form-group write-form" method="post">
+        <form class="form-group modify-form" method="post">
             <input name="_id" type="text" class="form-control" value="{{ result._id }}" style="display:none;" />
-            <input name="board-type" type="text" class="form-control" value="게시글" readonly />
-            <input name="title" type="text" class="form-control title" value="{{ result.title }}" />
-            <input name="author" type="text" class="form-control author" value="{{ result.author }}" readonly />
-            <input name="updated" type="text" class="form-control updated" value="{{ result.updated }}" readonly />
-            <textarea name="content" class="summernote content">{{ result.content }}</textarea>
-            <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
+            <input name="board-type" type="text" class="form-control" value="{% if subject == 'Todo Modify': %}할 일{% else %}게시글{% endif %}" readonly />
+            <input name="title" type="text" class="form-control" value="{{ result.title }}" />
+            <input name="author" type="text" class="form-control" value="{{ result.author }}" readonly />
+            <input name="updated" type="text" class="form-control" value="{{ result.updated }}" readonly />
+            <textarea name="content" class="summernote">{{ result.content }}</textarea>
+            <button type="button" class="btn btn-sm btn-default" id="modify-submit">제 출</button>
             <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/board/view/'">돌아가기</button>
         </form>
     </div>
@@ -23,7 +23,15 @@
 
     <script>
         $(document).ready(function () {
-            convertPage($('.masthead-nav > #gotoBoard'));
+            var highlight = 'Board';
+            var pre_uri = 'boards/';
+
+            if ('{{ subject }}' == 'Todo Modify') {
+                highlight = 'Todo';
+                pre_uri = 'todos/';
+            }
+
+            convertPage($('.masthead-nav > #goto' + highlight));
 
             $('.summernote').summernote({
                 placeholder: '내용 입력',
@@ -34,8 +42,13 @@
                 focus: true
             });
 
-            $('.write-form #write-submit').on('click', function() {
-                modifyAction($('.write-form'));
+            // go to list page
+            $('.board-guide #gotoListPage').on('click', function() {
+                getDocument(pre_uri, '');
+            });
+
+            $('.modify-form #modify-submit').on('click', function() {
+                modifyAction($('.modify-form'), highlight);
             });
         });
     </script>

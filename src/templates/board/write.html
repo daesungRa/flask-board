@@ -1,32 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
     <div class="board-guide"> <!-- 모듈화 하기! -->
-        <a class="btn btn-sm btn-default" href="http://localhost:5000/boards/">목록으로</a>
+        <button class="btn btn-sm btn-default" id="gotoListPage">목록으로</button>
     </div>
     <br/><hr/>
     <div class="write-container">
-        <span>새 글 쓰기</span>
+        <span>{{ subject }}</span>
         <span>(사용자 정보 출력)</span>
         <hr>
         <form class="form-group write-form">
-            <select name="board-type" class="form-control" required>
+            <!--<select name="board-type" class="form-control" required>
                 <option>(선택) 게시판 종류를 선택하세요</option>
                 <option value="0" selected>게시글</option>
                 <option value="1">할 일</option>
-            </select>
-            <input name="title" type="text" class="form-control title" placeholder="제목을 입력하세요" />
-            <input name="author" type="text" class="form-control author" value="testUser" readonly />
-            <input name="created" type="text" class="form-control created" value="{{ currTime }}" readonly />
-            <textarea name="content" class="summernote content"></textarea>
+            </select>-->
+            <input name="title" type="text" class="form-control" placeholder="제목을 입력하세요" />
+            <input name="author" type="text" class="form-control" value="testUser" readonly />
+            <input name="created" type="text" class="form-control" value="{{ currTime }}" readonly />
+            <textarea name="content" class="summernote"></textarea>
             <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>
-            <button type="button" class="btn btn-sm btn-default" onclick="location.href='http://localhost:5000/board/view/'">뷰 페이지(임시)</button>
         </form>
     </div>
     <hr/>
 
     <script>
         $(document).ready(function () {
-            convertPage($('.masthead-nav > #gotoBoard'));
+            var highlight = 'Board';
+            var pre_uri = 'boards/';
+
+            if ('{{ subject }}' == 'Todo Write') {
+                highlight = 'Todo';
+                pre_uri = 'todos/';
+            }
+
+            convertPage($('.masthead-nav > #goto' + highlight));
 
             $('.summernote').summernote({
                 placeholder: '내용을 입력하세요',
@@ -37,8 +44,14 @@
                 focus: true
             });
 
+            // go to list page
+            $('.board-guide #gotoListPage').on('click', function() {
+                getDocument(pre_uri, '');
+            });
+
+            // write action
             $('.write-form #write-submit').on('click', function() {
-                writeAction($('.write-form'));
+                writeAction($('.write-form'), highlight);
             });
         });
     </script>
