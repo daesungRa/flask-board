@@ -27,7 +27,7 @@
             <hr/>
             <div class="view-body">
                 <div class="view-content">
-
+                    {{ result.content }}
                 </div>
             </div>
         </div>
@@ -49,8 +49,6 @@
 
     <script>
         $(document).ready(function () {
-            alert($.parseHTML('{{ result.content }}'))
-
             var highlight = 'Board';
             var pre_uri = 'board/';
             var post_uri = '';

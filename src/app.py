@@ -7,7 +7,7 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-board = service.Service()
+sevice = service.Service()
 
 @app.route("/", methods=['GET'])
 def home():
@@ -17,113 +17,95 @@ def home():
 def contact():
     return render_template('contact.html'), 200
 
-# board routes
+# board, todo routes
+@app.route('/todos/', methods=['GET'])
 @app.route('/boards/', methods=['GET'])
 def boards():
-    result = board.find({}, 'boards') # type of list
-    return render_template('board/board.html', result_list=result, subject='Board List'), 200
+    col_name = 'boards'
+    subject = 'Board List'
 
-@app.route('/board/view/<string:id>', methods=['GET'])
-def view(id=None):
-    result = board.find_by_id(id, 'boards')
-    return render_template('board/boardView.html', result=result, subject='Board View'), 200
+    if request.path.find('todo') >= 0:
+        col_name = 'todos'
+        subject = 'Todo List'
 
-@app.route('/board/write/', methods=['GET', 'POST'])
-def write():
-    if request.method == 'GET':
-        currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/write.html', currTime=currTime, subject='Board Write'), 200
-    else:
-        title = request.form['title']
-        author = request.form['author']
-        content = request.form['content']
-
-        result = board.create({'title': title, 'author': author, 'content': content}, 'boards')
-        if result is not None:
-            return '1'
-        else:
-            return '0'
-
-@app.route('/board/modify/<string:id>', methods=['GET'])
-@app.route('/board/modify/', methods=['POST'])
-def modify(id=None):
-    if request.method == 'GET':
-        result = board.find_by_id(id, 'boards')
-        result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/modify.html', result=result, subject='Board Modify'), 200
-    else:
-        id = request.form['_id']
-        title = request.form['title']
-        content = request.form['content']
-
-        result = board.update(id, {'title': title, 'content': content}, 'boards')
-        if result is not None:
-            return result
-        else:
-            return None
-
-@app.route('/board/delete/', methods=['POST'])
-def delete():
-    # _id = request.values.get('_id')
-    _id = request.form['_id']
-    result = board.delete(_id, 'boards')
-
-    if result:
-        return '1'
-    else:
-        return '0'
-
-# todo routes
-@app.route('/todos/', methods=['GET'])
-def get_tasks():
-    result = board.find({}, 'todos') # type of todo list
-    return render_template('board/board.html', result_list=result, subject='Todo List'), 200
+    result = sevice.find({}, col_name) # type of list
+    return render_template('board/board.html', result_list=result, subject=subject), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
-def get_task(id=None):
-    result = board.find_by_id(id, 'todos')
-    return render_template('board/boardView.html', result=result, subject='Todo View'), 200
+@app.route('/board/view/<string:id>', methods=['GET'])
+def view(id=None):
+    col_name = 'boards'
+    subject = 'Board View';
+
+    if request.path.find('todo') >= 0:
+        col_name = 'todos'
+        subject = 'Todo View'
+
+    result = sevice.find_by_id(id, col_name)
+    return render_template('board/boardView.html', result=result, subject=subject), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
-def add_tasks():
+@app.route('/board/write/', methods=['GET', 'POST'])
+def write():
+    col_name = 'boards'
+    subject = 'Board Write';
+
+    if request.path.find('todo') >= 0:
+        col_name = 'todos'
+        subject = 'Todo Write'
+
     if request.method == 'GET':
         currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/write.html', currTime=currTime, subject='Todo Write'), 200
+        return render_template('board/write.html', currTime=currTime, subject=subject), 200
     else:
         title = request.form['title']
         author = request.form['author']
         content = request.form['content']
 
-        result = board.create({'title': title, 'author': author, 'content': content}, 'todos')
+        result = sevice.create({'title': title, 'author': author, 'content': content}, col_name)
         if result is not None:
             return '1'
         else:
             return '0'
-        return '0'
 
 @app.route('/todo/modify/<string:id>', methods=['GET'])
 @app.route('/todo/modify/', methods=['POST'])
-def update_tasks(id=None):
+@app.route('/board/modify/<string:id>', methods=['GET'])
+@app.route('/board/modify/', methods=['POST'])
+def modify(id=None):
+    col_name = 'boards'
+    subject = 'Board Modify';
+
+    if request.path.find('todo') >= 0:
+        col_name = 'todos'
+        subject = 'Todo Modify'
+
     if request.method == 'GET':
-        result = board.find_by_id(id, 'todos')
+        result = sevice.find_by_id(id, col_name)
         result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/modify.html', result=result, subject='Todo Modify'), 200
+        return render_template('board/modify.html', result=result, subject=subject), 200
     else:
         id = request.form['_id']
         title = request.form['title']
         content = request.form['content']
 
-        result = board.update(id, {'title': title, 'content': content}, 'todos')
+        result = sevice.update(id, {'title': title, 'content': content}, col_name)
         if result is not None:
             return result
         else:
             return None
 
 @app.route('/todo/delete/', methods=['POST'])
-def delete_tasks():
+@app.route('/board/delete/', methods=['POST'])
+def delete():
+    col_name = 'boards'
+
+    if request.path.find('todo'):
+        col_name = 'todos'
+
     # _id = request.values.get('_id')
     _id = request.form['_id']
-    result = board.delete(_id, 'todos')
+    result = sevice.delete(_id, col_name)
 
     if result:
         return '1'
@@ -142,6 +124,11 @@ def server_side_error(error):
 if __name__ == '__main__':
     app.config['DEBUG'] = True
     app.run()
+
+
+
+
+
 
 # @app.route('/todos/<string:todo_id>/', methods=['GET'])
 # def get_task(todo_id):
