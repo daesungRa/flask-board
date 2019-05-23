@@ -42,6 +42,7 @@ def view(id=None):
         subject = 'Todo View'
 
     result = sevice.find_by_id(id, col_name)
+    result['content'] = result['content']
     return render_template('board/boardView.html', result=result, subject=subject), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
@@ -100,13 +101,13 @@ def modify(id=None):
 def delete():
     col_name = 'boards'
 
-    if request.path.find('todo'):
+    if request.path.find('todo') >= 0:
         col_name = 'todos'
 
     # _id = request.values.get('_id')
     _id = request.form['_id']
     result = sevice.delete(_id, col_name)
-
+    print(result)
     if result:
         return '1'
     else:

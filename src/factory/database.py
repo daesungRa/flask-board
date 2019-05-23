@@ -58,5 +58,7 @@ class Database(object):
             return None
 
     def delete(self, id, collection_name):
+        print(collection_name)
+        print(id + ', ')
         deleted = self.db[collection_name].delete_one({"_id": ObjectId(id)})
         return bool(deleted.deleted_count)
