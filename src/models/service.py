@@ -28,6 +28,17 @@ class Service(object):
         # Fields optional for UPDATE
         self.update_optional_fields = []
 
+    def modify_fields(self, fields, create_required_fields, update_required_fields, create_optional_fields=None, update_optional_fields=None):
+        self.fields = fields
+        self.create_required_fields = create_required_fields
+        self.update_required_fields = update_required_fields
+
+        if create_optional_fields is not None:
+            self.create_optional_fields = create_optional_fields
+
+        if update_optional_fields is not None:
+            self.update_optional_fields = update_optional_fields
+
     def create(self, element, collection_name=None):
         alt_colname(self, collection_name)
 

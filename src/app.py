@@ -7,7 +7,16 @@ from datetime import datetime
 app = Flask(__name__)
 CORS(app)
 
-sevice = service.Service()
+fields = {
+    'username': 'string',
+    'pwd': 'string',
+    'nickname': 'string',
+    'register_date': 'datetime',
+}
+create_required_fields = ['username', 'pwd', 'nickname']
+update_required_fields = ['pwd', 'nickname']
+
+service = service.Service()
 
 @app.route("/", methods=['GET'])
 def home():
@@ -17,7 +26,7 @@ def home():
 def contact():
     return render_template('contact.html'), 200
 
-# board, todo routes
+# board and todo routes
 @app.route('/todos/', methods=['GET'])
 @app.route('/boards/', methods=['GET'])
 def boards():
@@ -28,7 +37,7 @@ def boards():
         col_name = 'todos'
         subject = 'Todo List'
 
-    result = sevice.find({}, col_name) # type of list
+    result = service.find({}, col_name) # type of list
     return render_template('board/board.html', result_list=result, subject=subject), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
@@ -41,7 +50,7 @@ def view(id=None):
         col_name = 'todos'
         subject = 'Todo View'
 
-    result = sevice.find_by_id(id, col_name)
+    result = service.find_by_id(id, col_name)
     result['content'] = result['content']
     return render_template('board/boardView.html', result=result, subject=subject), 200
 
@@ -63,7 +72,7 @@ def write():
         author = request.form['author']
         content = request.form['content']
 
-        result = sevice.create({'title': title, 'author': author, 'content': content}, col_name)
+        result = service.create({'title': title, 'author': author, 'content': content}, col_name)
         if result is not None:
             return '1'
         else:
@@ -82,7 +91,7 @@ def modify(id=None):
         subject = 'Todo Modify'
 
     if request.method == 'GET':
-        result = sevice.find_by_id(id, col_name)
+        result = service.find_by_id(id, col_name)
         result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
         return render_template('board/modify.html', result=result, subject=subject), 200
     else:
@@ -90,7 +99,7 @@ def modify(id=None):
         title = request.form['title']
         content = request.form['content']
 
-        result = sevice.update(id, {'title': title, 'content': content}, col_name)
+        result = service.update(id, {'title': title, 'content': content}, col_name)
         if result is not None:
             return result
         else:
@@ -106,12 +115,37 @@ def delete():
 
     # _id = request.values.get('_id')
     _id = request.form['_id']
-    result = sevice.delete(_id, col_name)
+    result = service.delete(_id, col_name)
     print(result)
     if result:
         return '1'
     else:
         return '0'
+
+# member routes
+@app.route('/signin/', methods=['GET', 'POST'])
+def signin():
+    if request.method == 'GET':
+        return render_template('user/signin.html')
+
+@app.route('/signout/', methods=['GET'])
+def signout():
+    pass
+
+@app.route('/signup/', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'GET':
+        currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
+        return render_template('user/signup.html', currTime=currTime)
+    else:
+        pass
+
+@app.route('/delete_account/', methods=['GET', 'POST'])
+def delete_account():
+    if request.method == 'GET':
+        pass
+    else:
+        pass
 
 # error routes
 @app.errorhandler(404)
@@ -179,4 +213,6 @@ if __name__ == '__main__':
 #     if request.method == "DELETE":
 #         todo.delete(todo_id)
 #         return "Record Deleted"
+
+
 
