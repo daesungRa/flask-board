@@ -10,6 +10,11 @@ class Database(object):
         self.client = MongoClient(config['db']['url'])
         self.db = self.client[config['db']['name']]
 
+    def count(self, collection_name):
+        cnt = self.db[collection_name].count()
+        print('count! : ' + str(cnt))
+        return cnt
+
     def insert(self, element, collection_name):
         element["created"] = datetime.now().strftime('%Y%m%d %H:%M:%S')
         element["updated"] = element['created']
@@ -17,11 +22,11 @@ class Database(object):
         print('db insert 결과 : ' + str(inserted))
         return str(inserted.inserted_id)
 
-    def find(self, criteria, collection_name, projection=None, sort=None, limit=0, cursor=False):
+    def find(self, criteria, collection_name, projection=None, sort=None, skip=0, limit=0, cursor=False):
         if "_id" in criteria:
             criteria["_id"] = ObjectId(criteria["_id"])
 
-        found = self.db[collection_name].find(filter=criteria, projection=projection, limit=limit, sort=sort)
+        found = self.db[collection_name].find(filter=criteria, projection=projection, skip=skip, limit=limit, sort=sort)
 
         if cursor:
             return found

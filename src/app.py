@@ -1,10 +1,11 @@
-from flask import Flask, request, Response, make_response, render_template, jsonify
+from flask import Flask, request, Response, make_response, session, render_template, jsonify
 from flask_cors import CORS
 from json import dumps, loads
 from src.models import service
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = 'FLASK SECRET KEY'
 CORS(app)
 
 fields = {
@@ -20,6 +21,8 @@ service = service.Service()
 
 @app.route("/", methods=['GET'])
 def home():
+    if 'username' not in session:
+        session['username'] = 'test_user'
     return render_template('index.html'), 200
 
 @app.route("/contact/", methods=['GET'])
@@ -27,9 +30,9 @@ def contact():
     return render_template('contact.html'), 200
 
 # board and todo routes
-@app.route('/todos/', methods=['GET'])
-@app.route('/boards/', methods=['GET'])
-def boards():
+@app.route('/todos/<int:nowpage>', methods=['GET'])
+@app.route('/boards/<int:nowpage>', methods=['GET'])
+def boards(nowpage=1):
     col_name = 'boards'
     subject = 'Board List'
 
@@ -37,8 +40,8 @@ def boards():
         col_name = 'todos'
         subject = 'Todo List'
 
-    result = service.find({}, col_name) # type of list
-    return render_template('board/board.html', result_list=result, subject=subject), 200
+    result = service.find({}, nowpage, col_name) # type of list
+    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], subject=subject), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
 @app.route('/board/view/<string:id>', methods=['GET'])

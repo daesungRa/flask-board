@@ -2,6 +2,40 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding|Nanum+Myeongjo&display=swap');
 
+/* custom modal style (based on bootstrap modal) */
+.modal {
+    top: 130px;
+}
+.modal .modal-body {
+    background-color: #fffdfd;
+}
+.modal .modal-body input {
+    margin: 5px 0 5px 0;
+}
+.side-component .welcome-message {
+    position: fixed;
+    font-size: 8pt;
+    top: 104px;
+    right: 0;
+    background-color: #fffefe;
+    border-radius: 5px;
+    padding: 3px 5px 3px 5px;
+}
+#btn_signin, #btn_signout {
+    position: fixed;
+    font-size: 8pt;
+    width: 70px;
+    top: 130px;
+    right: 0;
+}
+#btn_signup, #btn_mypage {
+    position: fixed;
+    font-size: 8pt;
+    width: 70px;
+    top: 156px;
+    right: 0;
+}
+
 /* triangle icon */
 .triangle {display:inline-block; width:0; height:0; border-style:solid; border-width:6px;}
 .triangle.underbar {

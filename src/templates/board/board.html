@@ -28,9 +28,30 @@
         {% endif %}
     </div>
     <hr/>
+    <div class="container-fluid pagination-part">
+        <ul class="pagination pagination-sm">
+            {% if pagination.nowpage >= 2 %}
+                <li class="alter_page">처음<span>1</span></li>
+                <li class="alter_page">이전<span>{{ pagination.nowpage - 1 }}</span></li>
+                <li>&nbsp;|&nbsp;</li>
+            {% endif %}
+            {% for i in range(pagination.startpage, pagination.endpage + 1) %}
+                {% if pagination.nowpage == i %}
+                    <li class="alter_page" style="color: red;">{{i}}<span>{{i}}</span></li>
+                {% else %}
+                    <li class="alter_page">{{i}}<span>{{i}}</span></li>
+                {% endif %}
+            {% endfor %}
+            {% if pagination.nowpage < pagination.maxpage %}
+                <li>&nbsp;|&nbsp;</li>
+                <li class="alter_page">다음<span>{{ pagination.nowpage + 1 }}</span></li>
+                <li class="alter_page">마지막<span>{{ pagination.maxpage }}</span></li>
+            {% endif %}
+        </ul>
+    </div>
     <!-- 동 페이지에서 ajax 로 처리할 것! 페이지 흐름에 대한 고려도 필요함 -->
-    <a href="http://localhost:5000/boards/" class="btn btn-sm btn-default">BOARDS</a>
-    <a href="http://localhost:5000/todos/" class="btn btn-sm btn-default">TODOS</a>
+    <a href="http://localhost:5000/boards/1" class="btn btn-sm btn-default">BOARDS</a>
+    <a href="http://localhost:5000/todos/1" class="btn btn-sm btn-default">TODOS</a>
 
     <script>
         $(document).ready(function () {
@@ -44,6 +65,11 @@
             }
 
             convertPage($('.masthead-nav > #goto' + highlight));
+
+            // alter list page
+            $('.pagination-part li').on('click', function() {
+                getDocument(pre_uri.split('/')[0] + 's/', $(this).children('span').text());
+            });
 
             // go to write page
             $('.board-guide #gotoWritePage').on('click', function() {

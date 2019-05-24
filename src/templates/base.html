@@ -1,5 +1,8 @@
 <!DOCTYPE HTML>
 <html lang="ko">
+    {% from "macros.html" import modal_link with context %}
+    {% import "member/signin.html" as signin %}
+    {% import "member/signup.html" as signup %}
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -25,6 +28,7 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='css/board.css') }}" />
         <script src="{{ url_for('static', filename='js/base.js' ) }}"></script>
         <script src="{{ url_for('static', filename='js/board.js' ) }}"></script>
+        <script src="{{ url_for('static', filename='js/member.js' ) }}"></script>
 
     </head>
     <body>
@@ -33,8 +37,8 @@
             <nav>
                 <ul class="nav masthead-nav">
                     <li id="gotoHome"><a href="http://localhost:5000/">Home</a></li>
-                    <li id="gotoBoard"><a href="http://localhost:5000/boards/">Board</a></li>
-                    <li id="gotoTodo"><a href="http://localhost:5000/todos/">Todo</a></li>
+                    <li id="gotoBoard"><a href="http://localhost:5000/boards/1">Board</a></li>
+                    <li id="gotoTodo"><a href="http://localhost:5000/todos/1">Todo</a></li>
                     <li id="gotoContact"><a href="http://localhost:5000/contact/">Contact</a></li>
                     <li id="account-management">
                         <span>account</span>
@@ -58,8 +62,35 @@
         <div class="inner">
             <p>&copy; copyright <a href="#">everyone</a>, by <a href="https://github.com/daesungRa" target="_blank">@rds</a>.</p>
         </div>
+
+        <!-- Button trigger modal -->
+        <div class="side-component">
+            {% if session['username'] %}
+            <div class="welcome-message">
+                Welcome, <strong><i><TT>{{ session['username'] }}</TT></i></strong>
+            </div>
+            <button type="button" id="btn_signout" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                SIGN OUT
+            </button>
+            <button type="button" id="btn_mypage" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                MY PAGE
+            </button>
+            {% else %}
+            <button type="button" id="btn_signin" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signin">
+                SIGN IN
+            </button>
+            <button type="button" id="btn_signup" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                SIGN UP
+            </button>
+            {% endif %}
+        </div>
+        <!-- imported modal macro -->
+        {{ modal_link('modal_signin', 'SIGN IN', signin) }}
+        {{ modal_link('modal_signup', 'SIGN UP', signup) }}
     </body>
 </html>
+
+
 
 <!--<div class="masthead clearfix">
     <div class="inner">
@@ -73,3 +104,5 @@
         </nav>
     </div>
 </div>-->
+
+
