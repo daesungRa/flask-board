@@ -14,7 +14,7 @@ function writeAction(form, highlight) {
         dataType: 'text',
         success: function(data) {
             if (data == '1') {
-                location.href = 'http://localhost:5000/' + highlight + 's/';
+                location.href = 'http://localhost:5000/' + highlight + 's/1';
             } else if (data == '0') {
                 alert('글 쓰기에 실패했습니다. 다시 시도하세요.');
                 $('.write-form .title').focus();
@@ -59,7 +59,7 @@ function deleteAction(id, highlight) {
         dataType: 'json',
         success: function(data) {
             if (data == '1') {
-                location.href = 'http://localhost:5000/' + highlight + 's/';
+                location.href = 'http://localhost:5000/' + highlight + 's/1';
             } else if (data == '0') {
                 alert('글 삭제에 실패했습니다. 다시 시도하세요.');
             }
