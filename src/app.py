@@ -1,7 +1,7 @@
 from flask import Flask, request, Response, make_response, session, render_template, jsonify
 from flask_cors import CORS
 from json import dumps, loads
-from src.models import service
+from src.service import service
 from datetime import datetime
 
 app = Flask(__name__)
