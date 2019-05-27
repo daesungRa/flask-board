@@ -1,11 +1,12 @@
-from flask import Flask, request, Response, make_response, session, render_template, jsonify
+from flask import Flask, request, render_template
 from flask_cors import CORS
-from json import dumps, loads
-from src.service import service
+from src.service import board_service, member_service
 from datetime import datetime
+from src.model.FlaskForm import MyForm, SignupForm, SigninForm
 
 app = Flask(__name__)
-app.secret_key = 'FLASK SECRET KEY'
+# app.secret_key = 'FLASK SECRET KEY'
+app.config['SECRET_KEY'] = 'db41d52ddb10d0b0ae411715154cd845'
 CORS(app)
 
 fields = {
@@ -13,18 +14,22 @@ fields = {
     'pwd': 'string',
     'email': 'string',
     'nickname': 'string',
-    'register_date': 'datetime',
+    'signup_date': 'datetime',
 }
 create_required_fields = ['username', 'pwd', 'email', 'nickname']
 update_required_fields = ['pwd', 'nickname']
 
-service = service.Service()
+service = board_service.Board_service()
+m_service = member_service.Member_service()
 
 @app.route("/", methods=['GET'])
 def home():
     # if 'username' not in session:
     #     session['username'] = 'test_user'
-    return render_template('index.html'), 200
+    signup_form = SignupForm()
+    signin_form = SigninForm()
+
+    return render_template('index.html', signup_form=signup_form, signin_form=signin_form), 200
 
 @app.route("/contact/", methods=['GET'])
 def contact():
@@ -130,7 +135,9 @@ def delete():
 @app.route('/signin/', methods=['GET', 'POST'])
 def signin():
     if request.method == 'GET':
-        return render_template('user/signin.html')
+        form = SigninForm()
+
+        return render_template('user/signin.html', form=form)
 
 @app.route('/signout/', methods=['GET'])
 def signout():
@@ -140,7 +147,9 @@ def signout():
 def signup():
     if request.method == 'GET':
         currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('user/signup.html', currTime=currTime)
+        form = SignupForm()
+
+        return render_template('user/signup.html', form=form, currTime=currTime)
     else:
         pass
 

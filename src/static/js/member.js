@@ -2,6 +2,10 @@ function signin(form) {
     alert('signin!');
 }
 
+function signup(form) {
+    alert('signup!');
+}
+
 function imagePreview(e) {
     var profile = document.getElementById('image');
     var url = e.srcElement;

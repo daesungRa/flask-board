@@ -5,7 +5,7 @@ class Pagination(object):
     def __init__(self):
         self.db = Database()
 
-        self.pagesize = 5 # 페이지 사이즈
+        self.pagesize = 2 # 페이지 사이즈
         self.blocksize = 5 # 블럭 사이즈
         self.nowpage = 1 # 현재 페이지 (기본 1 페이지)
 

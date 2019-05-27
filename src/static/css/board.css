@@ -41,6 +41,12 @@
     border-left: 1px solid #787878;
 }
 /* pagination style */
+.pagination-part {
+    text-align: center;
+}
+.pagination-part * {
+    display: inline;
+}
 .pagination-part li {
     margin-right: 5px;
 }

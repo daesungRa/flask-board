@@ -1,9 +1,10 @@
-<form class="form-group signup-form">
+<form class="form-group signup-form" method="POST">
+    <hr/>
     <input type="text" name="username" class="form-control signup-username" placeholder="사용자 이름 입력" />
     <input type="password" name="pwd" class="form-control signup-pwd" placeholder="사용자 비밀번호 입력" />
     <input type="password" name="re_pwd" class="form-control signup-pwd" placeholder="사용자 비밀번호 재입력" />
     <input type="email" name="email" class="form-control signup-email" placeholder="이메일 입력" />
-    <input type="text" name="nicknaem" class="form-control signup-nickname" placeholder="닉네임 입력" />
+    <input type="text" name="nickname" class="form-control signup-nickname" placeholder="닉네임 입력" />
     <div class="profile-part">
         <label for="signup-profile">프로필 사진 등록</label><br/>
         <input type="file" name="profile" class="signup-profile" id="signup-profile" onchange="imagePreview" /><br/>

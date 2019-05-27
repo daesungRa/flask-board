@@ -1,4 +1,4 @@
-{% macro modal_link(target_id, title, content, btn_first=None, btn_second=None) %}
+{% macro sign_modal(target_id, title, form, btn_first=None, btn_second=None) %}
 <div class="modal" id="{{ target_id }}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -9,7 +9,14 @@
         </button>
       </div>
       <div class="modal-body">
-        {{ content }}
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+          <legend class="border-bottom">
+            <dir class="form-group">
+
+            </dir>
+          </legend>
+        </fieldset>
       </div>
       <div class="modal-footer">
         {% if btn_first %}

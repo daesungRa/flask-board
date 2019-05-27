@@ -1,8 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="ko">
-    {% from "macros.html" import modal_link with context %}
-    {% import "member/signin.html" as signin %}
-    {% import "member/signup.html" as signup %}
+    {% from "macros.html" import sign_modal with context %}
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -85,8 +83,8 @@
             {% endif %}
         </div>
         <!-- imported modal macro -->
-        {{ modal_link('modal_signin', 'SIGN IN', signin) }}
-        {{ modal_link('modal_signup', 'SIGN UP', signup) }}
+        {{ sign_modal('modal_signin', 'SIGN IN', signin_form) }}
+        {{ sign_modal('modal_signup', 'SIGN UP', signup_form) }}
     </body>
 </html>
 
