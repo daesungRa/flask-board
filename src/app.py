@@ -11,18 +11,19 @@ CORS(app)
 fields = {
     'username': 'string',
     'pwd': 'string',
+    'email': 'string',
     'nickname': 'string',
     'register_date': 'datetime',
 }
-create_required_fields = ['username', 'pwd', 'nickname']
+create_required_fields = ['username', 'pwd', 'email', 'nickname']
 update_required_fields = ['pwd', 'nickname']
 
 service = service.Service()
 
 @app.route("/", methods=['GET'])
 def home():
-    if 'username' not in session:
-        session['username'] = 'test_user'
+    # if 'username' not in session:
+    #     session['username'] = 'test_user'
     return render_template('index.html'), 200
 
 @app.route("/contact/", methods=['GET'])
