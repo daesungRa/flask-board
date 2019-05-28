@@ -1,8 +1,9 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, g, redirect, url_for, flash
 from flask_cors import CORS
-from src.service import board_service, member_service
 from datetime import datetime
-from src.model.FlaskForm import MyForm, SignupForm, SigninForm
+from json import dumps
+from src.service import board_service, member_service
+from src.model.FlaskForm import SignupForm, SigninForm
 
 app = Flask(__name__)
 # app.secret_key = 'FLASK SECRET KEY'
@@ -22,32 +23,51 @@ update_required_fields = ['pwd', 'nickname']
 service = board_service.Board_service()
 m_service = member_service.Member_service()
 
+def account_form_decorator(func):
+    def wrapper():
+        signup_form = SignupForm(scrf_enabled=False)
+        signin_form = SigninForm(scrf_enabled=False)
+        account_form = [signup_form, signin_form]
+        return func(account_form)
+    wrapper.__name__ = func.__name__
+    return wrapper
+
+@app.before_request
+def before_request():
+    account_form = [SignupForm(), SigninForm()]
+    g.account_form = account_form
+
 @app.route("/", methods=['GET'])
-def home():
+@account_form_decorator
+def home(account_form):
     # if 'username' not in session:
     #     session['username'] = 'test_user'
-    signup_form = SignupForm()
-    signin_form = SigninForm()
 
-    return render_template('index.html', signup_form=signup_form, signin_form=signin_form), 200
+    return render_template('index.html', account_form=account_form), 200
 
 @app.route("/contact/", methods=['GET'])
 def contact():
-    return render_template('contact.html'), 200
+    return render_template('contact.html', account_form=g.account_form), 200
 
 # board and todo routes
-@app.route('/todos/<int:nowpage>', methods=['GET'])
-@app.route('/boards/<int:nowpage>', methods=['GET'])
-def boards(nowpage=1):
+@app.route('/todos/', methods=['GET', 'POST'])
+@app.route('/boards/', methods=['GET', 'POST'])
+def boards():
     col_name = 'boards'
     subject = 'Board List'
+    nowpage = 1
 
     if request.path.find('todo') >= 0:
         col_name = 'todos'
         subject = 'Todo List'
 
+    if request.method == 'POST':
+        nowpage = int(request.form['nowpage'])
+        result = service.find({}, nowpage, col_name) # type of list
+        return dumps(render_template('board/list.html', result_list=result['list'], pagination=result['pagination'], subject=subject))
+
     result = service.find({}, nowpage, col_name) # type of list
-    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], subject=subject), 200
+    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], account_form=g.account_form, subject=subject), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
 @app.route('/board/view/<string:id>', methods=['GET'])
@@ -61,7 +81,7 @@ def view(id=None):
 
     result = service.find_by_id(id, col_name)
     result['content'] = result['content']
-    return render_template('board/boardView.html', result=result, subject=subject), 200
+    return render_template('board/boardView.html', result=result, account_form=g.account_form, subject=subject), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
 @app.route('/board/write/', methods=['GET', 'POST'])
@@ -75,7 +95,7 @@ def write():
 
     if request.method == 'GET':
         currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/write.html', currTime=currTime, subject=subject), 200
+        return render_template('board/write.html', currTime=currTime, account_form=g.account_form, subject=subject), 200
     else:
         title = request.form['title']
         author = request.form['author']
@@ -102,7 +122,7 @@ def modify(id=None):
     if request.method == 'GET':
         result = service.find_by_id(id, col_name)
         result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/modify.html', result=result, subject=subject), 200
+        return render_template('board/modify.html', result=result, account_form=g.account_form, subject=subject), 200
     else:
         id = request.form['_id']
         title = request.form['title']
@@ -132,12 +152,14 @@ def delete():
         return '0'
 
 # member routes
-@app.route('/signin/', methods=['GET', 'POST'])
+@app.route('/signin/', methods=['POST'])
 def signin():
-    if request.method == 'GET':
-        form = SigninForm()
-
-        return render_template('user/signin.html', form=form)
+    form = SigninForm()
+    if form.validate_on_submit():
+        flash(f'You are successfully Sign In for {form.email.data} account!', 'success')
+        return redirect(url_for('home'))
+    flash(f'Invalid Account, try again plz', 'danger')
+    return redirect(url_for('home'))
 
 @app.route('/signout/', methods=['GET'])
 def signout():

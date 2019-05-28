@@ -19,6 +19,11 @@
 .cover .table-board, .cover .table-head, .cover .table-body {
     /*border: 1px solid blue;*/
 }
+.cover .board-container {
+    padding: 0 10px 0 10px;
+    background-color: #fff;
+    border: 1px solid #acacac;
+}
 .cover .table-board {
     margin: 40px 0 40px 0;
     font-family: 'Nanum Myeongjo', serif;
@@ -38,11 +43,12 @@
 }
 .cover .table-board span {
     font-size: 10pt;
-    border-left: 1px solid #787878;
+    border-left: 1px solid #bdbdbd;
 }
 /* pagination style */
 .pagination-part {
     text-align: center;
+    margin-bottom: 20px;
 }
 .pagination-part * {
     display: inline;

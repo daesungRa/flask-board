@@ -1,4 +1,4 @@
-{% macro sign_modal(target_id, title, form, btn_first=None, btn_second=None) %}
+{% macro account_modal(target_id, title, form, btn_first=None, btn_second=None) %}
 <div class="modal" id="{{ target_id }}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -9,20 +9,104 @@
         </button>
       </div>
       <div class="modal-body">
-        {{ form.hidden_tag() }}
-        <fieldset class="form-group">
-          <legend class="border-bottom">
-            <dir class="form-group">
+        <div class="content-section">
+          <form action="signin/" method="POST">
+            {{ form.hidden_tag() }}
+            <fieldset class="form-group">
+              {% if form.username %}
+                <div class="form-group">
+                  {{ form.username.label(class='form-control-label') }}
+                  {% if form.username.errors %}
+                    {{ form.username(class='form-control form-control-sm is-invalid') }}
+                    <div class="invalid-feedback">
+                      {% for error in form.username.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.username(class='form-control form-control-sm') }}
+                  {% endif %}
 
-            </dir>
-          </legend>
-        </fieldset>
+                  {{ form.nickname.label(class='form-control-label') }}
+                  {% if form.nickname.errors %}
+                    {{ form.nickname(class='form-control form-control-sm is-invalid') }}
+                    <div class="invalid-feedback">
+                      {% for error in form.nickname.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.nickname(class='form-control form-control-sm') }}
+                  {% endif %}
+                </div>
+              {% endif %}
+              <div class="form-group">
+                {{ form.email.label(class='form-control-label') }}
+                {% if form.email.errors %}
+                  {{ form.email(class='form-control form-control-sm is-invalid') }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.email(class='form-control form-control-sm') }}
+                {% endif %}
+              </div>
+              <div class="form-group">
+                {{ form.pwd.label(class='form-control-label') }}
+                {% if form.pwd.errors %}
+                    {{ form.pwd(class='form-control form-control-sm is-invalid') }}
+                    <div class="invalid-feedback">
+                      {% for error in form.pwd.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.pwd(class='form-control form-control-sm') }}
+                  {% endif %}
+              </div>
+              {% if form.confirm_pwd %}
+                <div class="form-group">
+                  {{ form.confirm_pwd.label(class='form-control-label') }}
+                  {% if form.confirm_pwd.errors %}
+                    {{ form.confirm_pwd(class='form-control form-control-sm is-invalid') }}
+                    <div class="invalid-feedback">
+                      {% for error in form.confirm_pwd.errors %}
+                        <span>{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  {% else %}
+                    {{ form.confirm_pwd(class='form-control form-control-sm') }}
+                  {% endif %}
+                </div>
+                <div class="profile-part">
+                    <label for="signup-profile">프로필 사진 등록</label><br/>
+                    <input type="file" name="profile" class="signup-profile" id="signup-profile" onchange="return imagePreview(event);" /><br/>
+                    <img id="image" src="{{ url_for('static', filename='imgs/blank_profile01.png') }}" alt="profile-image" />
+                </div>
+              {% endif %}
+            </fieldset>
+            <div class="form-group">
+              {{ form.submit(class='btn btn-outline-info') }}
+            </div>
+          </form>
+        </div>
+        <div class="border-top pt-3">
+          <small class="text-muted">
+            {% if title == 'SIGN UP' %}
+              Already Have An Account? <span class="ml-2" onclick="$('.modal-dialog .modal-close').trigger('click'); $('.side-component #btn_signin').trigger('click');">Sign In</span>
+            {% else %}
+              Create Account? <span class="ml-2" onclick="$('.modal-dialog .modal-close').trigger('click'); $('.side-component #btn_signup').trigger('click');">Sign Up</span>
+            {% endif %}
+          </small>
+        </div>
       </div>
       <div class="modal-footer">
         {% if btn_first %}
           <button type="button" class="btn btn-sm btn-primary">{{ btn_first }}</button>
         {% endif %}
-        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">{% if btn_second %}{{ btn_second }}{% else %}Close{% endif %}</button>
+        <button type="button" class="btn btn-sm btn-secondary modal-close" data-dismiss="modal">{% if btn_second %}{{ btn_second }}{% else %}Close{% endif %}</button>
       </div>
     </div>
   </div>

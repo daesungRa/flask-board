@@ -3,6 +3,18 @@ function getDocument(uri, id) {
     location.href = 'http://localhost:5000/' + uri + id;
 }
 
+function changeList(uri, nowpage) {
+    $.ajax({
+        type: 'post',
+        url: 'http://localhost:5000/' + uri,
+        data: {nowpage: nowpage},
+        dataType: 'json',
+        success: function(data) {
+            $('.site-wrapper .cover').html(data);
+        }
+    });
+}
+
 function writeAction(form, highlight) {
     highlight = highlight.toLowerCase();
     var formData = form.serialize();
@@ -14,7 +26,7 @@ function writeAction(form, highlight) {
         dataType: 'text',
         success: function(data) {
             if (data == '1') {
-                location.href = 'http://localhost:5000/' + highlight + 's/1';
+                location.href = 'http://localhost:5000/' + highlight + 's/';
             } else if (data == '0') {
                 alert('글 쓰기에 실패했습니다. 다시 시도하세요.');
                 $('.write-form .title').focus();
@@ -59,7 +71,7 @@ function deleteAction(id, highlight) {
         dataType: 'json',
         success: function(data) {
             if (data == '1') {
-                location.href = 'http://localhost:5000/' + highlight + 's/1';
+                location.href = 'http://localhost:5000/' + highlight + 's/';
             } else if (data == '0') {
                 alert('글 삭제에 실패했습니다. 다시 시도하세요.');
             }

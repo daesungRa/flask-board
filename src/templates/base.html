@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="ko">
-    {% from "macros.html" import sign_modal with context %}
+    {% from "macros.html" import account_modal with context %}
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -35,15 +35,15 @@
             <nav>
                 <ul class="nav masthead-nav">
                     <li id="gotoHome"><a href="http://localhost:5000/">Home</a></li>
-                    <li id="gotoBoard"><a href="http://localhost:5000/boards/1">Board</a></li>
-                    <li id="gotoTodo"><a href="http://localhost:5000/todos/1">Todo</a></li>
+                    <li id="gotoBoard"><a href="http://localhost:5000/boards/">Board</a></li>
+                    <li id="gotoTodo"><a href="http://localhost:5000/todos/">Todo</a></li>
                     <li id="gotoContact"><a href="http://localhost:5000/contact/">Contact</a></li>
-                    <li id="account-management">
+                    <!--<li id="account-management">
                         <span>account</span>
                         <div class="dropdown account-dropdown">
                             <div class="triangle underbar"></div>
                         </div>
-                    </li>
+                    </li>-->
                 </ul>
             </nav>
         </div>
@@ -51,6 +51,15 @@
             <div class="site-wrapper-inner">
                 <div class="cover-container">
                     <div class="inner cover">
+                        {% with messages = get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                                {% for category, message in messages %}
+                                    <div class="alert alert-{{ category }}">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
+                            {% endif %}
+                        {% endwith %}
                         {% block content %}
                         {% endblock %}
                     </div>
@@ -64,27 +73,27 @@
         <!-- Button trigger modal -->
         <div class="side-component">
             {% if session['username'] %}
-            <div class="welcome-message">
-                Welcome, <strong><i><TT>{{ session['username'] }}</TT></i></strong>
-            </div>
-            <button type="button" id="btn_signout" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
-                SIGN OUT
-            </button>
-            <button type="button" id="btn_mypage" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
-                MY PAGE
-            </button>
+                <div class="welcome-message">
+                    Welcome, <strong><i><TT>{{ session['username'] }}</TT></i></strong>
+                </div>
+                <button type="button" id="btn_signout" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                    SIGN OUT
+                </button>
+                <button type="button" id="btn_mypage" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                    MY PAGE
+                </button>
             {% else %}
-            <button type="button" id="btn_signin" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signin">
-                SIGN IN
-            </button>
-            <button type="button" id="btn_signup" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
-                SIGN UP
-            </button>
+                <button type="button" id="btn_signin" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signin">
+                    SIGN IN
+                </button>
+                <button type="button" id="btn_signup" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                    SIGN UP
+                </button>
             {% endif %}
         </div>
         <!-- imported modal macro -->
-        {{ sign_modal('modal_signin', 'SIGN IN', signin_form) }}
-        {{ sign_modal('modal_signup', 'SIGN UP', signup_form) }}
+        {{ account_modal('modal_signup', 'SIGN UP', account_form[0]) }}
+        {{ account_modal('modal_signin', 'SIGN IN', account_form[1]) }}
     </body>
 </html>
 
