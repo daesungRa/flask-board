@@ -45,7 +45,7 @@ def home(account_form):
     # if 'username' not in session:
     #     session['username'] = 'test_user'
 
-    return render_template('index.html', account_form=account_form, form=None), 200
+    return render_template('index.html', account_form=account_form), 200
 
 @app.route("/contact/", methods=['GET'])
 def contact():
@@ -174,6 +174,11 @@ def signup():
         file = form.profile.data
         filename = secure_filename(file.filename)
         savepath = os.path.join(app.instance_path.split('instance')[0], 'static', 'imgs', 'members', filename)
+        if os.path.exists(savepath):
+            import secrets
+            print(savepath.split('.')[0], savepath.split('.')[1])
+            savepath = savepath.split('.')[0] + secrets.token_hex(16) + '.' + savepath.split('.')[1]
+            print('altered savepath : ' + savepath)
         file.save(savepath)
 
         ## register user info to database logic

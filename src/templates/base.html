@@ -60,7 +60,7 @@
                                 {% endfor %}
                             {% endif %}
                         {% endwith %}
-                        {% if form.errors %}
+                        {% if form and form.errors %}
                             {% for fieldName, errorMessages in form.errors.items(): %}
                                 <p>fieldName : {{ fieldName }}</p>
                                 {% for error in errorMessages %}

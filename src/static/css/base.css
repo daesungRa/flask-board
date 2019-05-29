@@ -120,7 +120,7 @@ body {
 }
 
 /* Contact Style */
-.contact-video {
+.cover-video {
     position: absolute;
     right: 0;
     top: 0;
@@ -129,7 +129,7 @@ body {
     height: 100%;
     overflow: hidden;
 }
-.contact-contents {
+.cover-contents {
     position: absolute;
     text-align: center;
     left: 0;
@@ -139,6 +139,9 @@ body {
     color: #fff;
     background: rgba(0, 0, 0, 0.7);
     padding: 15px 0 5px 0;
+}
+.cover-contents a {
+    color: #fff;
 }
 
 /*

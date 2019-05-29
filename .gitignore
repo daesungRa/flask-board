@@ -21,3 +21,8 @@ __pycache__/
 
 *.db
 *.log
+
+# files
+src/**/*.jpg
+src/**/*.png
+src/**/*.mp4
