@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template, g, redirect, url_for, flash
+from werkzeug.utils import secure_filename
+import os
 from flask_cors import CORS
 from datetime import datetime
 from json import dumps
@@ -43,7 +45,7 @@ def home(account_form):
     # if 'username' not in session:
     #     session['username'] = 'test_user'
 
-    return render_template('index.html', account_form=account_form), 200
+    return render_template('index.html', account_form=account_form, form=None), 200
 
 @app.route("/contact/", methods=['GET'])
 def contact():
@@ -81,7 +83,7 @@ def view(id=None):
 
     result = service.find_by_id(id, col_name)
     result['content'] = result['content']
-    return render_template('board/boardView.html', result=result, account_form=g.account_form, subject=subject), 200
+    return render_template('board/view.html', result=result, account_form=g.account_form, subject=subject), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
 @app.route('/board/write/', methods=['GET', 'POST'])
@@ -165,15 +167,21 @@ def signin():
 def signout():
     pass
 
-@app.route('/signup/', methods=['GET', 'POST'])
+@app.route('/signup/', methods=['POST'])
 def signup():
-    if request.method == 'GET':
-        currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        form = SignupForm()
+    form = SignupForm()
+    if form.validate_on_submit():
+        file = form.profile.data
+        filename = secure_filename(file.filename)
+        savepath = os.path.join(app.instance_path.split('instance')[0], 'static', 'imgs', 'members', filename)
+        file.save(savepath)
 
-        return render_template('user/signup.html', form=form, currTime=currTime)
-    else:
-        pass
+        ## register user info to database logic
+
+        flash(f'You are successfully Sign Un for {form.email.data} account!', 'success')
+        return redirect(url_for('home'))
+    flash(f'Invalid Information, try again plz', 'danger')
+    return render_template('index.html', account_form=g.account_form, form=form), 200
 
 @app.route('/delete_account/', methods=['GET', 'POST'])
 def delete_account():

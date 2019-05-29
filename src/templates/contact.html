@@ -1,6 +1,31 @@
 {% extends "base.html" %}
 {% block content %}
-    contact page..
+    <video class="contact-video" autoplay loop muted>
+        <source src="/static/videos/cover0{{ range(1, 6)|random }}.mp4" type="video/mp4" />
+        Your browser does not support HTML5 video.
+    </video>
+    <div class="contact-contents">
+        <h2>For Contact ...</h2>
+        <hr style="border: 1px solid #fff;"/>
+        <div style="display: inline-block; width: 30%; text-align: left;">
+            <div class="row" style="margin: 5px 0 5px 0;">
+                <span class="col-sm-2">EMAIL</span>
+                <span class="col-sm-10 contact-email">daesungra@gmail.com</span>
+            </div>
+            <div class="row" style="margin: 5px 0 5px 0;">
+                <span class="col-sm-2">TEL</span>
+                <span class="col-sm-10 contact-email">010 - 0000 - 0000</span>
+            </div>
+            <div class="row" style="margin: 5px 0 5px 0;">
+                <span class="col-sm-2">SITE</span>
+                <span class="col-sm-10 contact-email"><a href="https://github.com/daesungra" target="_blank" style="color: #ffcece">daesungra's github</a></span>
+            </div>
+            <div class="row" style="margin: 5px 0 5px 0;">
+                <span class="col-sm-2">ETC</span>
+                <span class="col-sm-10 contact-email">hahaha~</span>
+            </div>
+        </div>
+    </div>
 
     <script>
         $(document).ready(function () {

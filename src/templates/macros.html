@@ -10,21 +10,25 @@
       </div>
       <div class="modal-body">
         <div class="content-section">
-          <form action="signin/" method="POST">
+          {% if form.username %}
+          <form action="{{ url_for('signup') }}" method="POST" enctype="multipart/form-data">
+          {% else %}
+          <form action="{{ url_for('signin') }}" method="POST" enctype="multipart/form-data">
+          {% endif %}
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
               {% if form.username %}
                 <div class="form-group">
                   {{ form.username.label(class='form-control-label') }}
                   {% if form.username.errors %}
-                    {{ form.username(class='form-control form-control-sm is-invalid') }}
+                    {{ form.username(class='form-control form-control-sm is-invalid', autofocus='autofocus') }}
                     <div class="invalid-feedback">
                       {% for error in form.username.errors %}
                         <span>{{ error }}</span>
                       {% endfor %}
                     </div>
                   {% else %}
-                    {{ form.username(class='form-control form-control-sm') }}
+                    {{ form.username(class='form-control form-control-sm', autofocus='autofocus') }}
                   {% endif %}
 
                   {{ form.nickname.label(class='form-control-label') }}
@@ -43,14 +47,14 @@
               <div class="form-group">
                 {{ form.email.label(class='form-control-label') }}
                 {% if form.email.errors %}
-                  {{ form.email(class='form-control form-control-sm is-invalid') }}
+                  {{ form.email(class='form-control form-control-sm is-invalid', autofocus='autofocus') }}
                   <div class="invalid-feedback">
                     {% for error in form.email.errors %}
                       <span>{{ error }}</span>
                     {% endfor %}
                   </div>
                 {% else %}
-                  {{ form.email(class='form-control form-control-sm') }}
+                  {{ form.email(class='form-control form-control-sm', autofocus='autofocus') }}
                 {% endif %}
               </div>
               <div class="form-group">
@@ -80,10 +84,22 @@
                     {{ form.confirm_pwd(class='form-control form-control-sm') }}
                   {% endif %}
                 </div>
-                <div class="profile-part">
-                    <label for="signup-profile">프로필 사진 등록</label><br/>
-                    <input type="file" name="profile" class="signup-profile" id="signup-profile" onchange="return imagePreview(event);" /><br/>
-                    <img id="image" src="{{ url_for('static', filename='imgs/blank_profile01.png') }}" alt="profile-image" />
+                <div class="form-group profile-part">
+                    {{ form.profile.label(class='form-control-label') }}<br/>
+                    <div class="profile-container">
+                      {% if form.profile.errors %}
+                        {{ form.profile(class='is-invalid signup-profile', id='signup-profile', onchange='return imagePreview(event);') }}
+                        <img id="image" src="{{ url_for('static', filename='imgs/blank_profile01.png') }}" alt="profile-image" />
+                        <div class="invalid-feedback">
+                          {% for error in form.profile.errors %}
+                            <span>{{ error }}</span>
+                          {% endfor %}
+                        </div>
+                      {% else %}
+                        {{ form.profile(class='signup-profile', id='signup-profile', onchange='return imagePreview(event);') }}
+                        <img id="image" src="{{ url_for('static', filename='imgs/blank_profile01.png') }}" alt="profile-image" />
+                      {% endif %}
+                    </div>
                 </div>
               {% endif %}
             </fieldset>

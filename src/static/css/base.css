@@ -35,11 +35,12 @@
     top: 156px;
     right: 0;
 }
-.signup-form .profile-part {
-    text-align: left;
-    margin: 15px 0 15px 0;
+#modal_signup .profile-part .profile-container {
+    text-align: center;
+    border: 1px solid #cecece;
+    border-radius: 5px;
 }
-.profile-part #image {
+#modal_signup .profile-part #image {
     width: 90px;
     height: 90px;
     border-radius: 90px;
@@ -90,6 +91,7 @@ body {
 
 /* Extra markup and styles for table-esque vertical and horizontal centering */
 .site-wrapper {
+    position: relative;
     display: table;
     width: 100%;
     height: 70%;
@@ -110,10 +112,33 @@ body {
 /* Padding for spacing */
 .inner {
     padding: 30px 90px 48px 90px;
+    background-color: rgba(255, 255, 255, 0);
 }
 .masthead .inner {
     border-bottom: 2px solid #9c9c9c;
     margin-top: 70px;
+}
+
+/* Contact Style */
+.contact-video {
+    position: absolute;
+    right: 0;
+    top: 0;
+    object-fit: fill;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.contact-contents {
+    position: absolute;
+    text-align: center;
+    left: 0;
+    top: 27%;
+    width: 100%;
+    min-height: 230px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0.7);
+    padding: 15px 0 5px 0;
 }
 
 /*
