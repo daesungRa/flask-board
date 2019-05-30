@@ -67,3 +67,6 @@ class Database(object):
         print(id + ', ')
         deleted = self.db[collection_name].delete_one({"_id": ObjectId(id)})
         return bool(deleted.deleted_count)
+
+
+

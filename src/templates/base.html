@@ -51,23 +51,27 @@
             <div class="site-wrapper-inner">
                 <div class="cover-container">
                     <div class="inner cover">
-                        {% with messages = get_flashed_messages(with_categories=true) %}
-                            {% if messages %}
-                                {% for category, message in messages %}
-                                    <div class="alert alert-{{ category }}">
-                                        {{ message }}
+                        <div class="message-container">
+                            {% with messages = get_flashed_messages(with_categories=true) %}
+                                {% if messages %}
+                                    {% for category, message in messages %}
+                                        <div class="alert alert-{{ category }} alert-message">
+                                            {{ message }}
+                                        </div>
+                                    {% endfor %}
+                                {% endif %}
+                            {% endwith %}
+                            {% if form and form.errors %}
+                                {% for fieldName, errorMessages in form.errors.items(): %}
+                                    <div class="alert alert-danger alert-message">
+                                        <p>fieldName : {{ fieldName }}</p>
+                                        {% for error in errorMessages %}
+                                            <p>error : {{ error }}</p>
+                                        {% endfor %}
                                     </div>
                                 {% endfor %}
                             {% endif %}
-                        {% endwith %}
-                        {% if form and form.errors %}
-                            {% for fieldName, errorMessages in form.errors.items(): %}
-                                <p>fieldName : {{ fieldName }}</p>
-                                {% for error in errorMessages %}
-                                    <p>error : {{ error }}</p>
-                                {% endfor %}
-                            {% endfor %}
-                        {% endif %}
+                        </div>
                         {% block content %}
                         {% endblock %}
                     </div>
@@ -100,8 +104,8 @@
             {% endif %}
         </div>
         <!-- imported modal macro -->
-        {{ account_modal('modal_signup', 'SIGN UP', account_form[0]) }}
-        {{ account_modal('modal_signin', 'SIGN IN', account_form[1]) }}
+        {{ account_modal('modal_signup', 'SIGN UP', uri, account_form[0]) }}
+        {{ account_modal('modal_signin', 'SIGN IN', uri, account_form[1]) }}
     </body>
 </html>
 

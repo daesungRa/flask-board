@@ -6,9 +6,7 @@ class Board_service(object):
     def __init__(self):
         self.validator = Validator()
         self.db = Database()
-
         self.collection_name = 'boards' # default collection name
-
         self.fields = {
             "title": "string",
             "author": "string",
@@ -16,19 +14,10 @@ class Board_service(object):
             "created": "datetime",
             "updated": "datetime",
         }
-
         self.create_required_fields = ["title", "author", "content"]
-
-        # Fields optional for CREATE
         self.create_optional_fields = []
-
-        # Fields required for UPDATE
         self.update_required_fields = ["title", "content"]
-
-        # Fields optional for UPDATE
         self.update_optional_fields = []
-
-        # Pagination Instance
         self.pagination = Pagination()
 
     def modify_fields(self, fields, create_required_fields, update_required_fields, create_optional_fields=None, update_optional_fields=None):
@@ -51,8 +40,6 @@ class Board_service(object):
         return "Inserted _Id : " + res
 
     def find(self, element, nowpage, collection_name=None):
-        # 컬렉션 변경 가능하도록 수정 (190517, fri)
-        ## 'board' 인 클래스명도 변경 요망 (ok, 190520, mon)
         alt_colname(self, collection_name)
         self.pagination.tot_pagination(nowpage, self.collection_name)
 
@@ -63,8 +50,6 @@ class Board_service(object):
         return result
 
     def find_by_id(self, id, collection_name=None):
-        # 컬렉션 변경 가능하도록 수정 (190517, fri)
-        ## 'board' 인 클래스명도 변경 요망 (ok, 190520, mon)
         alt_colname(self, collection_name)
         return self.db.find_by_id(id, self.collection_name)
 

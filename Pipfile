@@ -11,6 +11,7 @@ pymongo = "*"
 flask-cors = "*"
 jinja2 = "*"
 flask-wtf = "*"
+pymysql = "*"
 
 [requires]
 python_version = "3.7"

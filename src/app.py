@@ -8,31 +8,20 @@ from src.service import board_service, member_service
 from src.model.FlaskForm import SignupForm, SigninForm
 
 app = Flask(__name__)
-# app.secret_key = 'FLASK SECRET KEY'
 app.config['SECRET_KEY'] = 'db41d52ddb10d0b0ae411715154cd845'
 CORS(app)
-
-fields = {
-    'username': 'string',
-    'pwd': 'string',
-    'email': 'string',
-    'nickname': 'string',
-    'signup_date': 'datetime',
-}
-create_required_fields = ['username', 'pwd', 'email', 'nickname']
-update_required_fields = ['pwd', 'nickname']
 
 service = board_service.Board_service()
 m_service = member_service.Member_service()
 
-def account_form_decorator(func):
-    def wrapper():
-        signup_form = SignupForm(scrf_enabled=False)
-        signin_form = SigninForm(scrf_enabled=False)
-        account_form = [signup_form, signin_form]
-        return func(account_form)
-    wrapper.__name__ = func.__name__
-    return wrapper
+# def account_form_decorator(func):
+#     def wrapper():
+#         signup_form = SignupForm(scrf_enabled=False)
+#         signin_form = SigninForm(scrf_enabled=False)
+#         account_form = [signup_form, signin_form]
+#         return func(account_form)
+#     wrapper.__name__ = func.__name__
+#     return wrapper
 
 @app.before_request
 def before_request():
@@ -40,16 +29,15 @@ def before_request():
     g.account_form = account_form
 
 @app.route("/", methods=['GET'])
-@account_form_decorator
-def home(account_form):
+def home():
     # if 'username' not in session:
     #     session['username'] = 'test_user'
 
-    return render_template('index.html', account_form=account_form), 200
+    return render_template('index.html', account_form=g.account_form, uri='home'), 200
 
 @app.route("/contact/", methods=['GET'])
 def contact():
-    return render_template('contact.html', account_form=g.account_form), 200
+    return render_template('contact.html', account_form=g.account_form, uri='contact'), 200
 
 # board and todo routes
 @app.route('/todos/', methods=['GET', 'POST'])
@@ -69,7 +57,7 @@ def boards():
         return dumps(render_template('board/list.html', result_list=result['list'], pagination=result['pagination'], subject=subject))
 
     result = service.find({}, nowpage, col_name) # type of list
-    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], account_form=g.account_form, subject=subject), 200
+    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], account_form=g.account_form, subject=subject, uri=col_name), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
 @app.route('/board/view/<string:id>', methods=['GET'])
@@ -83,7 +71,7 @@ def view(id=None):
 
     result = service.find_by_id(id, col_name)
     result['content'] = result['content']
-    return render_template('board/view.html', result=result, account_form=g.account_form, subject=subject), 200
+    return render_template('board/view.html', result=result, account_form=g.account_form, subject=subject, uri=col_name), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
 @app.route('/board/write/', methods=['GET', 'POST'])
@@ -97,7 +85,7 @@ def write():
 
     if request.method == 'GET':
         currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/write.html', currTime=currTime, account_form=g.account_form, subject=subject), 200
+        return render_template('board/write.html', currTime=currTime, account_form=g.account_form, subject=subject, uri=col_name), 200
     else:
         title = request.form['title']
         author = request.form['author']
@@ -124,7 +112,7 @@ def modify(id=None):
     if request.method == 'GET':
         result = service.find_by_id(id, col_name)
         result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/modify.html', result=result, account_form=g.account_form, subject=subject), 200
+        return render_template('board/modify.html', result=result, account_form=g.account_form, subject=subject, uri=col_name), 200
     else:
         id = request.form['_id']
         title = request.form['title']
@@ -183,10 +171,11 @@ def signup():
 
         ## register user info to database logic
 
-        flash(f'You are successfully Sign Un for {form.email.data} account!', 'success')
-        return redirect(url_for('home'))
-    flash(f'Invalid Information, try again plz', 'danger')
-    return render_template('index.html', account_form=g.account_form, form=form), 200
+        flash(f'You are successfully Sign Up for {form.email.data} account!', 'success')
+    else:
+        flash(f'Invalid Information, try again please', 'danger')
+    return redirect(url_for('' + form.subject.data))
+    #return render_template('index.html', account_form=g.account_form, form=form), 200
 
 @app.route('/delete_account/', methods=['GET', 'POST'])
 def delete_account():

@@ -10,6 +10,7 @@ class SignupForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired(), Email()])
     nickname = StringField('Nickname', validators=[DataRequired(), Length(min=2, max=20)])
     profile = FileField('Profile', validators=[FileAllowed(['jpg', 'png']), FileRequired()])
+    subject = StringField('subject')
     submit = SubmitField('Sign Up')
 
     # https://stackoverflow.com/questions/52899084/flask-wtforms-why-is-my-post-request-to-upload-a-file-not-sending-the-file-data
@@ -18,6 +19,7 @@ class SigninForm(FlaskForm):
     pwd = PasswordField('Password', validators=[DataRequired()])
     email = StringField('Email', validators=[DataRequired(), Email()])
     remember = BooleanField('Remember Me')
+    subject = StringField('subject')
     submit = SubmitField('Sign In')
 
 

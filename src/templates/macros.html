@@ -1,4 +1,4 @@
-{% macro account_modal(target_id, title, form, btn_first=None, btn_second=None) %}
+{% macro account_modal(target_id, title, uri, form, btn_first=None, btn_second=None) %}
 <div class="modal" id="{{ target_id }}" tabindex="-1" role="dialog">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -17,6 +17,7 @@
           {% endif %}
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
+              {{ form.subject(class='form-control form-control-sm', type='hidden', value=uri) }}
               {% if form.username %}
                 <div class="form-group">
                   {{ form.username.label(class='form-control-label') }}

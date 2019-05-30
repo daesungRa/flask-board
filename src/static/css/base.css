@@ -20,6 +20,7 @@
     background-color: #fffefe;
     border-radius: 5px;
     padding: 3px 5px 3px 5px;
+    z-index: 6;
 }
 #btn_signin, #btn_signout {
     position: fixed;
@@ -27,6 +28,7 @@
     width: 70px;
     top: 130px;
     right: 0;
+    z-index: 6;
 }
 #btn_signup, #btn_mypage {
     position: fixed;
@@ -34,6 +36,7 @@
     width: 70px;
     top: 156px;
     right: 0;
+    z-index: 6;
 }
 #modal_signup .profile-part .profile-container {
     text-align: center;
@@ -119,8 +122,20 @@ body {
     margin-top: 70px;
 }
 
-/* Contact Style */
-.cover-video {
+/* Content Style */
+.cover-container .message-container {
+    position: fixed;
+    top: 9%;
+    left: 0;
+    width: 100%;
+    z-index: 5;
+    text-align: center;
+}
+.cover-container .alert-message {
+    display: inline-block;
+    width: 60%;
+}
+.cover-container .cover-video {
     position: absolute;
     right: 0;
     top: 0;
@@ -129,7 +144,7 @@ body {
     height: 100%;
     overflow: hidden;
 }
-.cover-contents {
+.cover-container .cover-contents {
     position: absolute;
     text-align: center;
     left: 0;
@@ -140,7 +155,7 @@ body {
     background: rgba(0, 0, 0, 0.7);
     padding: 15px 0 5px 0;
 }
-.cover-contents a {
+.cover-container .cover-contents a {
     color: #fff;
 }
 
