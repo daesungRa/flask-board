@@ -1,11 +1,11 @@
-from flask import Flask, request, render_template, g, redirect, url_for, flash
+from flask import Flask, request, session, render_template, g, redirect, url_for, flash
 from werkzeug.utils import secure_filename
 import os
 from flask_cors import CORS
 from datetime import datetime
 from json import dumps
 from src.service import board_service, member_service
-from src.model.FlaskForm import SignupForm, SigninForm
+from src.model.account_form import SignupForm, SigninForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'db41d52ddb10d0b0ae411715154cd845'
@@ -30,14 +30,11 @@ def before_request():
 
 @app.route("/", methods=['GET'])
 def home():
-    # if 'username' not in session:
-    #     session['username'] = 'test_user'
-
-    return render_template('index.html', account_form=g.account_form, uri='home'), 200
+    return render_template('index.html', account_form=g.account_form), 200
 
 @app.route("/contact/", methods=['GET'])
 def contact():
-    return render_template('contact.html', account_form=g.account_form, uri='contact'), 200
+    return render_template('contact.html', account_form=g.account_form), 200
 
 # board and todo routes
 @app.route('/todos/', methods=['GET', 'POST'])
@@ -57,7 +54,7 @@ def boards():
         return dumps(render_template('board/list.html', result_list=result['list'], pagination=result['pagination'], subject=subject))
 
     result = service.find({}, nowpage, col_name) # type of list
-    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], account_form=g.account_form, subject=subject, uri=col_name), 200
+    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], account_form=g.account_form, subject=subject), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
 @app.route('/board/view/<string:id>', methods=['GET'])
@@ -71,7 +68,7 @@ def view(id=None):
 
     result = service.find_by_id(id, col_name)
     result['content'] = result['content']
-    return render_template('board/view.html', result=result, account_form=g.account_form, subject=subject, uri=col_name), 200
+    return render_template('board/view.html', result=result, account_form=g.account_form, subject=subject), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
 @app.route('/board/write/', methods=['GET', 'POST'])
@@ -84,8 +81,8 @@ def write():
         subject = 'Todo Write'
 
     if request.method == 'GET':
-        currTime = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/write.html', currTime=currTime, account_form=g.account_form, subject=subject, uri=col_name), 200
+        currTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return render_template('board/write.html', currTime=currTime, account_form=g.account_form, subject=subject), 200
     else:
         title = request.form['title']
         author = request.form['author']
@@ -111,8 +108,8 @@ def modify(id=None):
 
     if request.method == 'GET':
         result = service.find_by_id(id, col_name)
-        result['updated'] = datetime.now().strftime('%Y%m%d %H:%M:%S')
-        return render_template('board/modify.html', result=result, account_form=g.account_form, subject=subject, uri=col_name), 200
+        result['updated'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        return render_template('board/modify.html', result=result, account_form=g.account_form, subject=subject), 200
     else:
         id = request.form['_id']
         title = request.form['title']
@@ -142,40 +139,63 @@ def delete():
         return '0'
 
 # member routes
-@app.route('/signin/', methods=['POST'])
+@app.route('/signin/', methods=['GET', 'POST'])
 def signin():
+    if 'email' not in session and request.method == 'GET':
+        return render_template('member/signin.html', account_form=g.account_form), 200
+
     form = SigninForm()
-    if form.validate_on_submit():
-        flash(f'You are successfully Sign In for {form.email.data} account!', 'success')
-        return redirect(url_for('home'))
-    flash(f'Invalid Account, try again plz', 'danger')
-    return redirect(url_for('home'))
+    if 'email' not in session and form.validate_on_submit():
+        access_account_result = m_service.access_account(form)
+
+        if access_account_result:
+            # insert for session
+            session['email'] = access_account_result[0]['email'] # unique index
+            session['nickname'] = access_account_result[0]['nickname'] # user nickname
+
+            flash(f'[Success] You are successfully Sign In for {form.email.data} account!', 'success')
+            return redirect(url_for('home'))
+        else:
+            flash(f'[Failure] There is no account information about {form.email.data}, or a password mismatched', 'warning')
+            return render_template('/member/signin.html', account_form=form), 200
+
+    flash(f'[Warning] Invalid Information, try again please', 'warning')
+    return render_template('member/signin.html', account_form=form), 200
 
 @app.route('/signout/', methods=['GET'])
 def signout():
-    pass
+    if 'email' in session:
+        session.pop('email', None)
+        flash(f'[Success] You are successfully sign out! Bye~', 'success')
+        return redirect(url_for('home'))
+    else:
+        flash(f'[Warning] You must sign in this web site first', 'warning')
+        return redirect(url_for('signin'))
 
-@app.route('/signup/', methods=['POST'])
+@app.route('/signup/', methods=['GET', 'POST'])
 def signup():
+    if request.method == 'GET':
+        return render_template('member/signup.html', account_form=g.account_form), 200
+
     form = SignupForm()
     if form.validate_on_submit():
-        file = form.profile.data
-        filename = secure_filename(file.filename)
-        savepath = os.path.join(app.instance_path.split('instance')[0], 'static', 'imgs', 'members', filename)
-        if os.path.exists(savepath):
-            import secrets
-            print(savepath.split('.')[0], savepath.split('.')[1])
-            savepath = savepath.split('.')[0] + secrets.token_hex(16) + '.' + savepath.split('.')[1]
-            print('altered savepath : ' + savepath)
-        file.save(savepath)
+        create_account_result = m_service.create_account(app.instance_path, form)
 
-        ## register user info to database logic
+        ## 분기 : 등록 성공(1, home) / 파일 저장 실패(2) / duplicate key error(3) / db error(4)
+        if create_account_result == 1:
+            flash(f'[Success] 등록 성공 ({form.email.data})', 'success')
+            return redirect(url_for('home'))
+        elif create_account_result == 2:
+            flash(f'[Warning] 파일 업로드 실패 ({form.email.data})', 'warning')
+        elif create_account_result == 3:
+            flash(f'[Warning] 이미 가입되어 있는 이메일입니다. ({form.email.data})', 'warning')
+        else:
+            flash(f'[Danger] 등록 실패. 관리자에게 문의하십시오. ({form.email.data})', 'danger')
 
-        flash(f'You are successfully Sign Up for {form.email.data} account!', 'success')
     else:
-        flash(f'Invalid Information, try again please', 'danger')
-    return redirect(url_for('' + form.subject.data))
-    #return render_template('index.html', account_form=g.account_form, form=form), 200
+        flash(f'[Failure] Invalid Information, try again please', 'warning')
+
+    return render_template('member/signup.html', account_form=form), 200
 
 @app.route('/delete_account/', methods=['GET', 'POST'])
 def delete_account():

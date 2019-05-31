@@ -1,23 +1,32 @@
-{% macro account_modal(target_id, title, uri, form, btn_first=None, btn_second=None) %}
-<div class="modal" id="{{ target_id }}" tabindex="-1" role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title">{{ title }}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+{% macro account_macro(target_id, title, form) %}
+<div class="account" id="{{ target_id }}" tabindex="-1" role="dialog">
+  <div class="account-dialog" role="document">
+    <div class="account-content">
+      <div class="account-header">
+        <h3 class="account-title">{{ title }}</h3>
       </div>
-      <div class="modal-body">
+      <div class="account-body">
         <div class="content-section">
           {% if form.username %}
           <form action="{{ url_for('signup') }}" method="POST" enctype="multipart/form-data">
           {% else %}
-          <form action="{{ url_for('signin') }}" method="POST" enctype="multipart/form-data">
+          <form action="{{ url_for('signin') }}" method="POST">
           {% endif %}
             {{ form.hidden_tag() }}
             <fieldset class="form-group">
-              {{ form.subject(class='form-control form-control-sm', type='hidden', value=uri) }}
+              <div class="form-group">
+                {{ form.email.label(class='form-control-label') }}
+                {% if form.email.errors %}
+                  {{ form.email(class='form-control form-control-sm is-invalid', autofocus='autofocus') }}
+                  <div class="invalid-feedback">
+                    {% for error in form.email.errors %}
+                      <span>{{ error }}</span>
+                    {% endfor %}
+                  </div>
+                {% else %}
+                  {{ form.email(class='form-control form-control-sm', autofocus='autofocus') }}
+                {% endif %}
+              </div>
               {% if form.username %}
                 <div class="form-group">
                   {{ form.username.label(class='form-control-label') }}
@@ -45,19 +54,6 @@
                   {% endif %}
                 </div>
               {% endif %}
-              <div class="form-group">
-                {{ form.email.label(class='form-control-label') }}
-                {% if form.email.errors %}
-                  {{ form.email(class='form-control form-control-sm is-invalid', autofocus='autofocus') }}
-                  <div class="invalid-feedback">
-                    {% for error in form.email.errors %}
-                      <span>{{ error }}</span>
-                    {% endfor %}
-                  </div>
-                {% else %}
-                  {{ form.email(class='form-control form-control-sm', autofocus='autofocus') }}
-                {% endif %}
-              </div>
               <div class="form-group">
                 {{ form.pwd.label(class='form-control-label') }}
                 {% if form.pwd.errors %}
@@ -112,18 +108,12 @@
         <div class="border-top pt-3">
           <small class="text-muted">
             {% if title == 'SIGN UP' %}
-              Already Have An Account? <span class="ml-2" onclick="$('.modal-dialog .modal-close').trigger('click'); $('.side-component #btn_signin').trigger('click');">Sign In</span>
+              Already Have an Account? <span class="ml-2" onclick="location.href = '/signin/'">Sign In</span>
             {% else %}
-              Create Account? <span class="ml-2" onclick="$('.modal-dialog .modal-close').trigger('click'); $('.side-component #btn_signup').trigger('click');">Sign Up</span>
+              Create Account? <span class="ml-2" onclick="location.href = '/signup/'">Sign Up</span>
             {% endif %}
           </small>
         </div>
-      </div>
-      <div class="modal-footer">
-        {% if btn_first %}
-          <button type="button" class="btn btn-sm btn-primary">{{ btn_first }}</button>
-        {% endif %}
-        <button type="button" class="btn btn-sm btn-secondary modal-close" data-dismiss="modal">{% if btn_second %}{{ btn_second }}{% else %}Close{% endif %}</button>
       </div>
     </div>
   </div>

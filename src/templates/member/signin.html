@@ -1,5 +1,9 @@
-<form class="form-group signin-form">
-    <input type="text" name="username" class="form-control signin-username" placeholder="사용자 이름 입력" />
-    <input type="password" name="pwd" class="form-control signin-pwd" placeholder="사용자 비밀번호 입력" />
-    <input type="button" class="btn btn-md btn-info signin-submit" value="SIGN IN" onclick="signin(this)" />
-</form>
+{% extends "base.html" %}
+{% from "macros.html" import account_macro with context %}
+{% block content %}
+    {% if account_form[1] %}
+        {{ account_macro('account_signin', 'SIGN IN', account_form[1]) }}
+    {% else %}
+        {{ account_macro('account_signin', 'SIGN IN', account_form) }}
+    {% endif %}
+{% endblock content %}

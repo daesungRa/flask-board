@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
 <html lang="ko">
-    {% from "macros.html" import account_modal with context %}
     <head>
         <meta charset="UTF-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -73,7 +72,7 @@
                             {% endif %}
                         </div>
                         {% block content %}
-                        {% endblock %}
+                        {% endblock content %}
                     </div>
                 </div>
             </div>
@@ -84,28 +83,26 @@
 
         <!-- Button trigger modal -->
         <div class="side-component">
-            {% if session['username'] %}
+            {% if session['email'] %}
                 <div class="welcome-message">
-                    Welcome, <strong><i><TT>{{ session['username'] }}</TT></i></strong>
+                    Welcome, <strong><i><TT>{{ session['nickname'] }}</TT></i></strong>
                 </div>
-                <button type="button" id="btn_signout" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                <button type="button" id="btn_signout" class="btn btn-sm btn-secondary" onclick="location.href = '/signout/'">
                     SIGN OUT
                 </button>
-                <button type="button" id="btn_mypage" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                <button type="button" id="btn_mypage" class="btn btn-sm btn-secondary" onclick="location.href = '#mypage'">
                     MY PAGE
                 </button>
             {% else %}
-                <button type="button" id="btn_signin" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signin">
+                <button type="button" id="btn_signin" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signin" onclick="location.href = '/signin/'">
                     SIGN IN
                 </button>
-                <button type="button" id="btn_signup" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup">
+                <button type="button" id="btn_signup" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#modal_signup" onclick="location.href = '/signup/'">
                     SIGN UP
                 </button>
             {% endif %}
         </div>
         <!-- imported modal macro -->
-        {{ account_modal('modal_signup', 'SIGN UP', uri, account_form[0]) }}
-        {{ account_modal('modal_signin', 'SIGN IN', uri, account_form[1]) }}
     </body>
 </html>
 

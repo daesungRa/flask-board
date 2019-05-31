@@ -16,11 +16,19 @@ class Database(object):
         return cnt
 
     def insert(self, element, collection_name):
-        element["created"] = datetime.now().strftime('%Y%m%d %H:%M:%S')
+        element["created"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         element["updated"] = element['created']
-        inserted = self.db[collection_name].insert_one(element)
-        print('db insert 결과 : ' + str(inserted))
-        return str(inserted.inserted_id)
+        try:
+            inserted = self.db[collection_name].insert_one(element)
+        except:
+            print(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ' - [database] raise duplicate key error')
+            inserted = 'duplicate key error'
+
+        if inserted:
+            return inserted
+        else:
+            print(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + ' - [database] database error')
+            return None
 
     def find(self, criteria, collection_name, projection=None, sort=None, skip=0, limit=0, cursor=False):
         if "_id" in criteria:
@@ -52,7 +60,7 @@ class Database(object):
     def update(self, id, element, collection_name):
         criteria = {"_id": ObjectId(id)}
 
-        element["updated"] = datetime.now().strftime('%Y%m%d %H:%M:%S')
+        element["updated"] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         set_obj = {"$set": element} # update value
 
         updated = self.db[collection_name].update_one(criteria, set_obj)

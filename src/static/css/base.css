@@ -2,14 +2,21 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding|Nanum+Myeongjo&display=swap');
 
-/* custom modal style (based on bootstrap modal) */
-.modal {
-    top: 40px;
+/* custom account style (based on bootstrap account) */
+.account {
+    display: inline-block;
+    width: 80%;
 }
-.modal .modal-body {
+.account .account-header {
+    text-align: left;
+    margin-bottom: 10px;
+}
+.account .account-body {
     background-color: #fffdfd;
+    padding: 20px;
+    border-radius: 15px;
 }
-.modal .modal-body input {
+.account .account-body input {
     margin: 5px 0 5px 0;
 }
 .side-component .welcome-message {
@@ -38,21 +45,21 @@
     right: 0;
     z-index: 6;
 }
-#modal_signup .profile-part .profile-container {
+.account-body .profile-part .profile-container {
     text-align: center;
     border: 1px solid #cecece;
     border-radius: 5px;
 }
-#modal_signup .profile-part #image {
+.account-body .profile-part #image {
     width: 90px;
     height: 90px;
     border-radius: 90px;
     margin: 10px 0 5px 0;
 }
-.modal-body .form-group {
+.account-body .form-group {
     text-align: left;
 }
-.modal-body .text-muted span:hover {
+.account-body .text-muted span:hover {
     color: #8d9afe;
     cursor: pointer;
 }
@@ -107,7 +114,7 @@ body {
     vertical-align: middle;
 }
 .cover-container {
-    padding: 50px; 0 50px 0;
+    padding: 30px; 0 50px 0;
     margin-right: auto;
     margin-left: auto;
 }
@@ -214,6 +221,7 @@ body {
  */
 .cover {
     padding: 0 20px;
+    text-align: center;
 }
 .cover .btn-lg {
     padding: 10px 20px;
