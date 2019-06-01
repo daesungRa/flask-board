@@ -45,7 +45,8 @@ class Member_service(object):
                 create_account_result = 1; # success
             elif result == 'duplicate key error':
                 # remove saved file
-                filename = instance_path.split('\instance')[0] + savepath
+                filename = instance_path.split('instance')[0] + savepath
+                print(f'remove file name : {filename}')
                 os.remove(filename)
 
                 create_account_result = 3; # duplicate key error
