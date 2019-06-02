@@ -1,6 +1,4 @@
 from flask import Flask, request, session, render_template, g, redirect, url_for, flash
-from werkzeug.utils import secure_filename
-import os
 from flask_cors import CORS
 from datetime import datetime
 from json import dumps
