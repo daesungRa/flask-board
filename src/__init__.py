@@ -1,6 +1,8 @@
-from flask import Flask, g, render_template
+from flask import Flask, g, render_template, request, jsonify
+import json
 from flask_cors import CORS
 from src.model.account_form import SignupForm, SigninForm
+from src.factory.mariadb import autocomplete_result
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'db41d52ddb10d0b0ae411715154cd845'
@@ -18,6 +20,14 @@ def home():
 @app.route("/contact/", methods=['GET'])
 def contact():
     return render_template('contact.html', account_form=g.account_form), 200
+
+@app.route("/autocomplete", methods=['POST'])
+def autocomplete():
+    query = request.form['query']
+    result = autocomplete_result(query)
+    print(list(result))
+
+    return jsonify({'suggestions': result})
 
 # error routes
 @app.errorhandler(404)

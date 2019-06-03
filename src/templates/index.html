@@ -1,16 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
-    <video class="cover-video" autoplay loop muted>
+    <!--<video class="cover-video" autoplay loop muted>
         <source src="/static/videos/cover0{{ range(1, 5)|random }}.mp4" type="video/mp4" />
         Your browser does not support HTML5 video.
-    </video>
+    </video>-->
     <div class="cover-contents">
-        <p class="index-title">Gooooooogle!</p>
+        <p class="index-title">Welcome!!</p>
         <div>
             <form class="form-group" id="fakebox">
-                <input class="form-control search-bar" type="text" placeholder="Search Google or type a URL" />
+                <input class="form-control search-bar" id="custom-search-bar" type="text" placeholder="Search Google or type a URL (custom)" />
                 <button id="fakebox-microphone" type="button" title="search in voice"></button>
             </form>
+        </div><br/><br/>
+        <div class="autocomplete-container">
+            <ul></ul>
         </div>
         <div class="shortcut-container">
             <a class="shortcut-link" href="https://github.com/daesungra" title="daesungra-github" target="_blank">
@@ -38,6 +41,10 @@
     <script>
         $(document).ready(function () {
             convertPage($('.masthead-nav > #gotoHome'));
+
+            $('#custom-search-bar').keyup(function(e) {
+                funcAutocomplete(e);
+            });
         });
     </script>
 {% endblock content %}
