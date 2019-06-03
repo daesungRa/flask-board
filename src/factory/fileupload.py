@@ -12,7 +12,7 @@ class Profile_Upload(object):
             print('실제 파일 저장경로 : ' + savepath)
             profile.save(savepath)
 
-            savepath = savepath.split('flask-board\\')[1]
+            savepath = savepath.split('flask-board')[1]
             return savepath
         except:
             print('raise exception during file upload..')
