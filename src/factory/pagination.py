@@ -9,14 +9,6 @@ class Pagination(object):
         self.blocksize = 5 # 블럭 사이즈
         self.nowpage = 1 # 현재 페이지 (기본 1 페이지)
 
-        self.totalcount = 0
-        self.maxpage = 0
-        self.maxblock = 0
-        self.nowblock = 0
-
-        self.endpage = 0
-        self.startpage = 0
-
     def tot_pagination(self, nowpage, collection_name):
         self.nowpage = nowpage # nowpage 세팅
         self.totalcount = self.db.count(collection_name) # 전체 도큐먼트 개수

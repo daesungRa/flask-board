@@ -62,7 +62,8 @@
 .cover-contents .autocomplete-container div {
     width: 100%;
     background-color: #fff;
-    color: #686868;
+    color: #575757;
+    text-shadow: none;
     border: none;
     text-align: left;
     padding-left: 25px;
