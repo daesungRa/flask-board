@@ -1,27 +1,25 @@
 from flask import Flask, g, render_template, request, jsonify, session
 from flask_cors import CORS
 from src.model.account_form import SignupForm, SigninForm
-from src.factory.mariadb import autocomplete_result
+# from src.factory.mariadb import autocomplete_result
 from src.service import autocomplete_service
 from datetime import timedelta
-import json
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'db41d52ddb10d0b0ae411715154cd845'
-app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=30)
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=1)
 CORS(app)
 
 auto_service = autocomplete_service.Autocomplete_service()
 
 @app.before_request
 def before_request():
-    session.permanent = True;
-
     account_form = [SignupForm(), SigninForm()]
     g.account_form = account_form
 
 @app.route("/", methods=['GET'])
 def home():
+    session.permanent = True;
     return render_template('index.html', account_form=g.account_form), 200
 
 @app.route("/contact/", methods=['GET'])
@@ -32,7 +30,8 @@ def contact():
 def autocomplete():
     query = request.form['query']
     # result = autocomplete_result(query) # return tuple type data
-    result = auto_service.find({'name': {'$regex': query}})
+    # result = auto_service.find({'name': {'$regex': query}})
+    result = auto_service.find({'Name': {'$regex': query, '$options': 'i'}})
     print(result)
 
     return jsonify({'suggestions': result})

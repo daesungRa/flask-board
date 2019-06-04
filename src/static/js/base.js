@@ -54,8 +54,8 @@ function funcAutocomplete(e) {
                             //     result[i][1] + ', ' + result[i][2] + '</button>');
 
                             // mongodb
-                            $('.cover-contents .autocomplete-container').append('<button value="' + result[i]['code'] + '">' +
-                                result[i]['code'] + ' / ' + result[i]['name'] + '</button>');
+                            $('.cover-contents .autocomplete-container').append('<button value="' + result[i]['Code'] + '">' +
+                                result[i]['Code'] + ' / ' + result[i]['Name'] + '</button>');
                         }
                     }
                 }

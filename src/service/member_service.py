@@ -34,7 +34,7 @@ class Member_service(object):
                 'nickname': form.nickname.data,
                 'pwd': form.pwd.data,
                 'profile': savepath,
-                'auth': 1
+                'auth': 1 # 1: common, 2: admin, 3: super_admin
             }
 
             ## register user info to database

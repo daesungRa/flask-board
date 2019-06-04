@@ -10,7 +10,8 @@ class Autocomplete_service(object):
     def find(self, element, collection_name=None):
         if collection_name:
             self.collection_name = collection_name
-        find_result = self.db.find(element, self.collection_name, projection={'name': 'true', 'code': 'true'}, limit=20)
+        # find_result = self.db.find(element, self.collection_name, projection={'name': 'true', 'code': 'true'}, limit=20)
+        find_result = self.db.find(element, self.collection_name, projection={'Name': 'true', 'Code': 'true'})
 
         return find_result
 
