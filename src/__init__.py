@@ -3,10 +3,13 @@ import json
 from flask_cors import CORS
 from src.model.account_form import SignupForm, SigninForm
 from src.factory.mariadb import autocomplete_result
+from src.service import autocomplete_service
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'db41d52ddb10d0b0ae411715154cd845'
 CORS(app)
+
+auto_service = autocomplete_service.Autocomplete_service()
 
 @app.before_request
 def before_request():
@@ -24,8 +27,9 @@ def contact():
 @app.route("/autocomplete", methods=['POST'])
 def autocomplete():
     query = request.form['query']
-    result = autocomplete_result(query)
-    print(list(result))
+    # result = autocomplete_result(query) # return tuple type data
+    result = auto_service.find({'name': {'$regex': query}})
+    print(result)
 
     return jsonify({'suggestions': result})
 

@@ -1,11 +1,15 @@
 .index-title {
     font-size: 36pt;
 }
+.cover-contents .main-container {
+    position: relative;
+}
 .search-bar {
-    border-radius: 20px;
+    border-radius: 5px;
     padding-left: 25px;
 }
 #fakebox {
+    position: relative;
     background-color: rgb(var(--GG100-rgb));
     border-radius: 22px;
     cursor: text;
@@ -15,7 +19,6 @@
     margin: 0 auto;
     max-width: 560px;
     opacity: 1;
-    position: relative;
     transition: background-color 300ms ease-in-out, opacity 200ms;
 }
 #fakebox-microphone {
@@ -30,6 +33,39 @@
     top: -6px;
     width: 24px;
     border: none;
+}
+.cover-contents .autocomplete-box {
+    position: absolute;
+    top: 23px;
+    width: 100%;
+    text-align: center;
+}
+.cover-contents .autocomplete-box .autocomplete-frame {
+    position: relative;
+    display: inline-block;
+    width: 560px;
+    border-radius: 5px;
+    z-index: 20;
+}
+.cover-contents .autocomplete-container {
+    width: 100%;
+    position: absolute;
+    top: 0; left: 0;
+}
+.cover-contents .autocomplete-container button {
+    width: 100%;
+    background-color: #fff;
+    border: none;
+    text-align: left;
+    padding-left: 25px;
+}
+.cover-contents .autocomplete-container div {
+    width: 100%;
+    background-color: #fff;
+    color: #686868;
+    border: none;
+    text-align: left;
+    padding-left: 25px;
 }
 .shortcut-container {
     text-align: center;

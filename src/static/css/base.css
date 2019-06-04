@@ -1,7 +1,7 @@
 /* font */
 @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding|Nanum+Myeongjo&display=swap');
-
+welcome-message
 /* custom account style (based on bootstrap account) */
 .account {
     display: inline-block;
@@ -21,8 +21,8 @@
 }
 .side-component .welcome-message {
     position: fixed;
-    font-size: 8pt;
-    top: 104px;
+    font-size: 12pt;
+    top: 98px;
     right: 0;
     background-color: #fffefe;
     border-radius: 5px;
