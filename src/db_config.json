@@ -1,6 +1,7 @@
 {
   "db": {
     "url": "mongodb://localhost:27017/",
+    "maxPoolSize": 100,
     "name": "flaskdb",
     "user": "tester",
     "password": "tester"

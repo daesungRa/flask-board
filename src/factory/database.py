@@ -7,7 +7,7 @@ from src.config import config
 class Database(object):
     def __init__(self):
         print('call database, \n' + str(config))
-        self.client = MongoClient(config['db']['url'])
+        self.client = MongoClient(config['db']['url'], config['db']['maxPoolSize'])
         self.db = self.client[config['db']['name']]
 
     def count(self, collection_name):
