@@ -1,10 +1,10 @@
-from flask import render_template, request, g
+from flask import render_template, url_for, request, session, flash, redirect
 from datetime import datetime
 from json import dumps
 from src import app
 from src.service import board_service
 
-service = board_service.Board_service()
+b_service = board_service.Board_service()
 
 # board and todo routes
 @app.route('/todos/', methods=['GET', 'POST'])
@@ -20,11 +20,11 @@ def boards():
 
     if request.method == 'POST':
         nowpage = int(request.form['nowpage'])
-        result = service.find({}, nowpage, col_name) # type of list
+        result = b_service.find({}, nowpage, col_name) # type of list
         return dumps(render_template('board/list.html', result_list=result['list'], pagination=result['pagination'], subject=subject))
 
-    result = service.find({}, nowpage, col_name) # type of list
-    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], account_form=g.account_form, subject=subject), 200
+    result = b_service.find({}, nowpage, col_name) # type of list
+    return render_template('board/board.html', result_list=result['list'], pagination=result['pagination'], subject=subject), 200
 
 @app.route('/todo/view/<string:id>', methods=['GET'])
 @app.route('/board/view/<string:id>', methods=['GET'])
@@ -36,9 +36,8 @@ def view(id=None):
         col_name = 'todos'
         subject = 'Todo View'
 
-    result = service.find_by_id(id, col_name)
-    result['content'] = result['content']
-    return render_template('board/view.html', result=result, account_form=g.account_form, subject=subject), 200
+    result = b_service.find_by_id(id, col_name)
+    return render_template('board/view.html', result=result, subject=subject), 200
 
 @app.route('/todo/write/', methods=['GET', 'POST'])
 @app.route('/board/write/', methods=['GET', 'POST'])
@@ -51,14 +50,18 @@ def write():
         subject = 'Todo Write'
 
     if request.method == 'GET':
-        currTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        return render_template('board/write.html', currTime=currTime, account_form=g.account_form, subject=subject), 200
+        if 'email' in session:
+            currTime = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            return render_template('board/write.html', currTime=currTime, subject=subject), 200
+        else:
+            flash(f'You have to SIGN IN first', 'info')
+            return redirect(url_for('signin'))
     else:
         title = request.form['title']
         author = request.form['author']
         content = request.form['content']
 
-        result = service.create({'title': title, 'author': author, 'content': content}, col_name)
+        result = b_service.create({'title': title, 'author': author, 'content': content}, col_name)
         if result is not None:
             return '1'
         else:
@@ -77,15 +80,15 @@ def modify(id=None):
         subject = 'Todo Modify'
 
     if request.method == 'GET':
-        result = service.find_by_id(id, col_name)
+        result = b_service.find_by_id(id, col_name)
         result['updated'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        return render_template('board/modify.html', result=result, account_form=g.account_form, subject=subject), 200
+        return render_template('board/modify.html', result=result, subject=subject), 200
     else:
         id = request.form['_id']
         title = request.form['title']
         content = request.form['content']
 
-        result = service.update(id, {'title': title, 'content': content}, col_name)
+        result = b_service.update(id, {'title': title, 'content': content}, col_name)
         if result is not None:
             return result
         else:
@@ -101,7 +104,7 @@ def delete():
 
     # _id = request.values.get('_id')
     _id = request.form['_id']
-    result = service.delete(_id, col_name)
+    result = b_service.delete(_id, col_name)
     print(result)
     if result:
         return '1'

@@ -5,8 +5,12 @@
     </div>
     <br/><hr/>
     <div class="write-container">
+        <div class="profile-part">
+            <div class="profile-container">
+                <img id="image" src="{{ url_for('static', filename='imgs' + session.profile.split('imgs')[1]) }}" alt="profile-image" />
+            </div>
+        </div>
         <span>{{ subject }}</span>
-        <span>(사용자 정보 출력)</span>
         <hr>
         <form class="form-group write-form">
             <!--<select name="board-type" class="form-control" required>
@@ -15,7 +19,7 @@
                 <option value="1">할 일</option>
             </select>-->
             <input name="title" type="text" class="form-control" placeholder="제목을 입력하세요" />
-            <input name="author" type="text" class="form-control" value="testUser" readonly />
+            <input name="author" type="text" class="form-control" value="{{ session.nickname }}" readonly />
             <input name="created" type="text" class="form-control" value="{{ currTime }}" readonly />
             <textarea name="content" class="summernote"></textarea>
             <button type="button" class="btn btn-sm btn-default" id="write-submit">제 출</button>

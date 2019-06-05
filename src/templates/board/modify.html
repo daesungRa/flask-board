@@ -5,8 +5,12 @@
     </div>
     <br/><hr/>
     <div class="modify-container">
+        <div class="profile-part">
+            <div class="profile-container">
+                <img id="image" src="{{ url_for('static', filename='imgs' + session.profile.split('imgs')[1]) }}" alt="profile-image" />
+            </div>
+        </div>
         <span>{{ subject }}</span>
-        <span>(사용자 정보 출력)</span>
         <hr>
         <form class="form-group modify-form" method="post">
             <input name="_id" type="text" class="form-control" value="{{ result._id }}" style="display:none;" />

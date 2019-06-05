@@ -37,7 +37,7 @@ class Board_service(object):
         # Validator will throw error if invalid
         self.validator.validate(element, self.fields, self.create_required_fields, self.create_optional_fields)
         res = self.db.insert(element, self.collection_name)
-        return "Inserted _Id : " + res
+        return res
 
     def find(self, element, nowpage, collection_name=None):
         alt_colname(self, collection_name)

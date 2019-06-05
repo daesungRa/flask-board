@@ -2,67 +2,6 @@
 @import url('https://fonts.googleapis.com/css?family=Nanum+Myeongjo&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic+Coding|Nanum+Myeongjo&display=swap');
 welcome-message
-/* custom account style (based on bootstrap account) */
-.account {
-    display: inline-block;
-    width: 80%;
-}
-.account .account-header {
-    text-align: left;
-    margin-bottom: 10px;
-}
-.account .account-body {
-    background-color: #fffdfd;
-    padding: 20px;
-    border-radius: 15px;
-}
-.account .account-body input {
-    margin: 5px 0 5px 0;
-}
-.side-component .welcome-message {
-    position: fixed;
-    font-size: 12pt;
-    top: 98px;
-    right: 0;
-    background-color: #fffefe;
-    border-radius: 5px;
-    padding: 3px 5px 3px 5px;
-    z-index: 6;
-}
-#btn_signin, #btn_signout {
-    position: fixed;
-    font-size: 8pt;
-    width: 70px;
-    top: 130px;
-    right: 0;
-    z-index: 6;
-}
-#btn_signup, #btn_mypage {
-    position: fixed;
-    font-size: 8pt;
-    width: 70px;
-    top: 156px;
-    right: 0;
-    z-index: 6;
-}
-.account-body .profile-part .profile-container {
-    text-align: center;
-    border: 1px solid #cecece;
-    border-radius: 5px;
-}
-.account-body .profile-part #image {
-    width: 90px;
-    height: 90px;
-    border-radius: 90px;
-    margin: 10px 0 5px 0;
-}
-.account-body .form-group {
-    text-align: left;
-}
-.account-body .text-muted span:hover {
-    color: #8d9afe;
-    cursor: pointer;
-}
 
 /* triangle icon */
 .triangle {display:inline-block; width:0; height:0; border-style:solid; border-width:6px;}

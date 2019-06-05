@@ -62,7 +62,7 @@ class Member_service(object):
             'email': form.email.data,
             'pwd': form.pwd.data
         }
-        find_result = self.db.find(criteria, self.collection_name, projection=['email', 'nickname'])
+        find_result = self.db.find(criteria, self.collection_name, projection=['email', 'nickname', 'profile'])
 
         return find_result
 

@@ -10,8 +10,8 @@ import os, json
 #  > 현재 파일(__file__) 기준으로 절대 경로를 얻어와 그것을 split 한 결과 반환된 list 타입에서 0 번재 인덱스에 저장된 디렉토리 정보를 얻어온다
 # os.path.join > 디렉토리 정보와 파일 정보를 재조립
 basedir = os.path.abspath(os.path.dirname(__file__))
-print('basedir\t\t\t\t\t\t\t: ' + basedir)
-print('basedir + json db config file\t: ' + os.path.join(basedir, 'db_config.json'))
+# print('basedir\t\t\t\t\t\t\t: ' + basedir)
+# print('basedir + json db config file\t: ' + os.path.join(basedir, 'db_config.json'))
 
 config = json.load(open(os.path.join(basedir, 'db_config.json')))
 

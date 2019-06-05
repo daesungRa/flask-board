@@ -17,7 +17,8 @@ def signin():
         if access_account_result:
             # insert for session
             session['email'] = access_account_result[0]['email'] # unique index
-            session['nickname'] = access_account_result[0]['nickname'] # user nickname
+            session['nickname'] = access_account_result[0]['nickname'] # unique nickname
+            session['profile'] = access_account_result[0]['profile'].replace('\\', '/')
 
             flash(f'[Success] You are successfully Sign In for {form.email.data} account!', 'success')
             return redirect(url_for('home'))
@@ -32,6 +33,8 @@ def signin():
 def signout():
     if 'email' in session:
         session.pop('email', None)
+        session.pop('nickname', None)
+        session.pop('profile', None)
         flash(f'[Success] You are successfully sign out! Bye~', 'success')
         return redirect(url_for('home'))
     else:
@@ -54,7 +57,7 @@ def signup():
         elif create_account_result == 2:
             flash(f'[Warning] 파일 업로드 실패 ({form.email.data})', 'warning')
         elif create_account_result == 3:
-            flash(f'[Warning] 이미 가입되어 있는 이메일입니다. ({form.email.data})', 'warning')
+            flash(f'[Warning] 이미 가입되어 있는 이메일 혹은 닉네임입니다. ({form.email.data}, {form.nickname.data})', 'warning')
         else:
             flash(f'[Danger] 등록 실패. 관리자에게 문의하십시오. ({form.email.data})', 'danger')
 

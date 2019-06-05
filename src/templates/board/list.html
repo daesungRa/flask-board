@@ -16,8 +16,8 @@
                 <div class="row table-body" id="{{ result._id }}">
                     <span class="col-md-6" style="border-left: none;">{{ result.title }}</span>
                     <span class="col-md-2">{{ result.author }}</span>
-                    <span class="col-md-2">{{ result.created.split(' ')[0] }}</span>
-                    <span class="col-md-2">{{ result.updated.split(' ')[0] }}</span>
+                    <span class="col-md-2">{{ result.created.split(' ')[0].split('20')[1] }}</span>
+                    <span class="col-md-2">{{ result.updated.split(' ')[0].split('20')[1] }}</span>
                 </div>
             {% endfor %}
         {% else %}

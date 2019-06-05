@@ -1,3 +1,5 @@
+
+/* main index style */
 .index-title {
     font-size: 36pt;
 }
@@ -68,6 +70,8 @@
     text-align: left;
     padding-left: 25px;
 }
+
+/* shortcut part */
 .shortcut-container {
     text-align: center;
     width: 100%;
@@ -119,8 +123,42 @@
     border-radius: 60px;
 }
 
-
-
+/* timeline style */
+.timeline-container {
+    position: fixed;
+    top: 100px; left: 60px; width: 240px; height: 620px;
+    background-color: #fff;
+}
+.timeline-container .timeline-title {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    font-size: 18pt;
+    padding: 5px 0 5px 0;
+    border-bottom: 1px solid #bebebe;
+}
+.timeline-container .timeline-content {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    padding: 5px 0 5px 0;
+}
+@media (max-width: 1260px) {
+    .timeline-container {
+        position: relative;
+        width: 85%;
+        height: 0;
+        min-height: 360px;
+        margin: 540px 0 120px -18px;
+    }
+    .timeline-container .timeline-content {
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        min-height: 300px;
+        padding-top: 120px;
+    }
+}
 
 
 

@@ -32,8 +32,13 @@
             </div>
         </div>
         <div class="view-right">
-            <button type="button" class="btn btn-sm btn-default" id="getModifyPage">수정</button><br/>
-            <button type="button" class="btn btn-sm btn-default" id="deleteAction">삭제</button>
+            {% if 'email' in session and session.nickname == result.author %}
+                <button type="button" class="btn btn-sm btn-primary" id="getModifyPage">수정</button><br/>
+                <button type="button" class="btn btn-sm btn-danger" id="deleteAction">삭제</button>
+            {% else %}
+                <button type="button" class="btn btn-sm btn-info" id="">추천</button><br/>
+                <button type="button" class="btn btn-sm btn-warning" id="">신고</button>
+            {% endif %}
         </div>
     </div>
     <hr/>
