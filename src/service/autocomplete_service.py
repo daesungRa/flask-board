@@ -15,5 +15,11 @@ class Autocomplete_service(object):
 
         return find_result
 
+    def find_one(self, element, collections_name=None):
+        if collections_name:
+            self.collection_name = collections_name
+        find_result = self.db.find_one(element, self.collection_name, projection={'Name': 'true', 'Code': 'true'})
+
+        return find_result
 
 

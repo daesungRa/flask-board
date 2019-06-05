@@ -36,6 +36,14 @@ def autocomplete():
 
     return jsonify({'suggestions': result})
 
+@app.route('/search', methods=['POST'])
+def search():
+    word = request.values.get('word')
+    result = auto_service.find_one({'Name': {'$regex': word, '$options': 'i'}})
+    print(result)
+
+    return jsonify({'result': result})
+
 # error routes
 @app.errorhandler(404)
 def page_not_found(error):

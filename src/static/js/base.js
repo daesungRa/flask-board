@@ -6,13 +6,15 @@ function convertPage(target) {
 function funcAutocomplete(e) {
     if (e.keyCode == '40'){
         $('.cover-contents .autocomplete-container button:first-child').focus();
+
         $('.cover-contents .autocomplete-container button').on('focus', function(){
             $(this).css({'background-color': '#efcece'});
             $('#custom-search-bar').val($(this).html().split(' / ')[1]);
             $(this).on('click', function() {
-                alert('search!');
+                var searchResult = funcSearch($('#custom-search-bar').val());
             });
         });
+
         $('.cover-contents .autocomplete-container button').on('focusout', function(){
             $(this).css({'background-color': '#fff'});
         });
@@ -64,4 +66,16 @@ function funcAutocomplete(e) {
             $('.cover-contents .autocomplete-container').html('');
         }
     }
+}
+
+function funcSearch(word) {
+    $.ajax({
+        type: 'post',
+        url: '/search',
+        data: {word: word},
+        dataType: 'json',
+        success: function(data) {
+            alert('[' + data.result._id + '] ' + data.result.Code + ' / ' + data.result.Name);
+        }
+    })
 }

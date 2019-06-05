@@ -6,7 +6,7 @@ from src.config import config
 
 class Database(object):
     def __init__(self):
-        print('call database, \n' + str(config))
+        # print('call database, \n' + str(config))
         self.client = MongoClient(config['db']['url'], config['db']['maxPoolSize'])
         self.db = self.client[config['db']['name']]
 
@@ -44,6 +44,20 @@ class Database(object):
         for i in range(len(found)):
             if "_id" in found[i]:
                 found[i]["_id"] = str(found[i]["_id"])
+
+        return found
+
+    def find_one(self, criteria, collection_name, projection=None, cursor=False):
+        if "_id" in criteria:
+            criteria["_id"] = ObjectId(criteria["_id"])
+
+        found = self.db[collection_name].find_one(filter=criteria, projection=projection)
+
+        if cursor:
+            return found
+
+        if "_id" in found:
+            found["_id"] = str(found["_id"])
 
         return found
 
