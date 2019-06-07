@@ -127,21 +127,51 @@
 .timeline-container {
     position: fixed;
     top: 100px; left: 60px; width: 240px; height: 620px;
+    font-size: 9pt;
     background-color: #fff;
+}
+.timeline-container * {
+    font-size: 9pt;
 }
 .timeline-container .timeline-title {
     position: absolute;
     top: 0;
     width: 100%;
-    font-size: 18pt;
     padding: 5px 0 5px 0;
     border-bottom: 1px solid #bebebe;
+}
+.timeline-container .timeline-title * {
+    font-size: 18pt;
 }
 .timeline-container .timeline-content {
     position: absolute;
     top: 50px;
     width: 100%;
     padding: 5px 0 5px 0;
+}
+.timeline-container .timeline-content ul {
+    list-style: none;
+    text-align: left;
+    padding-right: 10px;
+    margin-left: -35px;
+    height: 530px;
+    overflow-y: scroll;
+}
+.timeline-container .timeline-form {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 0;
+}
+.timeline-container .timeline-form input {
+    width: 80%;
+    height: 35px;
+    float: left;
+}
+.timeline-container .timeline-form button {
+    width: 20%;
+    height: 35px;
+    float: left;
 }
 @media (max-width: 1260px) {
     .timeline-container {
@@ -155,8 +185,11 @@
         position: absolute;
         top: 50px;
         width: 100%;
-        min-height: 300px;
-        padding-top: 120px;
+        /*min-height: 300px;*/
+        height: 300px;
+    }
+    .timeline-container .timeline-content ul {
+        height: 270px;
     }
 }
 

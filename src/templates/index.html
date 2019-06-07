@@ -39,8 +39,10 @@
         <div class="timeline-title">
             <span>TIMELINE</span>
         </div>
-        <div class="timeline-content">
-            No Contents
+        <div class="timeline-content">No Contents</div>
+        <div class="form-group timeline-form">
+            <input type="text"  class="form-control timeline-input-bar" id="my-timeline" />
+            <button class="btn btn-sm btn-outline-info" id="btn-send">SEND</button>
         </div>
     </div>
 
@@ -53,6 +55,8 @@
             $('#custom-search-bar').keyup(function(e) {
                 funcAutocomplete(e);
             });
+
+            socketio();
         });
     </script>
 {% endblock content %}
