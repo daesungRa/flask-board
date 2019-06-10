@@ -143,9 +143,15 @@
 .timeline-container .timeline-title * {
     font-size: 18pt;
 }
+.timeline-container .timeline-title .tot-connection {
+    position: absolute;
+    top: 48px;
+    right: 5px;
+    font-size: 8pt;
+}
 .timeline-container .timeline-content {
     position: absolute;
-    top: 50px;
+    top: 62px;
     width: 100%;
     padding: 5px 0 5px 0;
 }
@@ -154,7 +160,7 @@
     text-align: left;
     padding-right: 10px;
     margin-left: -35px;
-    height: 530px;
+    height: 518px;
     overflow-y: scroll;
 }
 .timeline-container .timeline-form {
@@ -183,13 +189,13 @@
     }
     .timeline-container .timeline-content {
         position: absolute;
-        top: 50px;
+        top: 62px;
         width: 100%;
         /*min-height: 300px;*/
         height: 300px;
     }
     .timeline-container .timeline-content ul {
-        height: 270px;
+        height: 258px;
     }
 }
 
