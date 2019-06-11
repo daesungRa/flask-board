@@ -11,8 +11,6 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=60)
 CORS(app)
 logging.create_logger(app)
 
-auto_service = autocomplete_service.Autocomplete_service()
-
 @app.before_request
 def before_request():
     account_form = [SignupForm(), SigninForm()]
@@ -26,24 +24,6 @@ def home():
 @app.route("/contact/", methods=['GET'])
 def contact():
     return render_template('contact.html', account_form=g.account_form), 200
-
-@app.route("/autocomplete", methods=['POST'])
-def autocomplete():
-    query = request.form['query']
-    # result = autocomplete_result(query) # return tuple type data
-    # result = auto_service.find({'name': {'$regex': query}})
-    result = auto_service.find({'Name': {'$regex': query, '$options': 'i'}})
-    print(result)
-
-    return jsonify({'suggestions': result})
-
-@app.route('/search', methods=['POST'])
-def search():
-    word = request.values.get('word')
-    result = auto_service.find_one({'Name': {'$regex': word, '$options': 'i'}})
-    print(result)
-
-    return jsonify({'result': result})
 
 # error routes
 @app.errorhandler(404)
