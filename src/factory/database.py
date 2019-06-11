@@ -56,7 +56,7 @@ class Database(object):
         if cursor:
             return found
 
-        if "_id" in found:
+        if found is not None and "_id" in found:
             found["_id"] = str(found["_id"])
 
         return found

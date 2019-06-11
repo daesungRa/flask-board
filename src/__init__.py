@@ -36,5 +36,5 @@ def server_side_error(error):
     app.logger.error(error)
     return render_template('error/500.html'), 200
 
-from src.routes import boards, members
+from src.routes import boards, members, autocomplete, timeline
 

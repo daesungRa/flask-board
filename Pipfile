@@ -13,6 +13,7 @@ jinja2 = "*"
 flask-wtf = "*"
 pymysql = "*"
 flask-socketio = "*"
+flask-bcrypt = "*"
 
 [requires]
 python_version = "3.7"

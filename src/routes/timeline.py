@@ -39,3 +39,4 @@ def disconnect(msg):
     emit('disconnect', {'data': 'Disconnected', 'nickname': session['nickname'], 'time': datetime.now().strftime('%H:%M')}, broadcast=True)
     session.clear()
 
+

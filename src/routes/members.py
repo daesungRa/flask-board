@@ -16,9 +16,9 @@ def signin():
 
         if access_account_result:
             # insert for session
-            session['email'] = access_account_result[0]['email'] # unique index
-            session['nickname'] = access_account_result[0]['nickname'] # unique nickname
-            session['profile'] = access_account_result[0]['profile'].replace('\\', '/')
+            session['email'] = access_account_result['email'] # unique index
+            session['nickname'] = access_account_result['nickname'] # unique nickname
+            session['profile'] = access_account_result['profile'].replace('\\', '/')
 
             flash(f'[Success] You are successfully Sign In for {form.email.data} account!', 'success')
             return redirect(url_for('home'))
