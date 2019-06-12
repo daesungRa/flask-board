@@ -29,6 +29,7 @@ class Member_service(object):
     def create_account(self, instance_path, form):
         ## duplicated file check and save
         savepath = self.profile_upload.upload(instance_path, form.profile.data)
+        create_account_result = 2
 
         if savepath:
             element = {
@@ -45,18 +46,18 @@ class Member_service(object):
             result = self.db.insert(element, self.collection_name)
 
             if result != 'duplicate key error':
-                create_account_result = 1; # success
+                create_account_result = 1 # success
             elif result == 'duplicate key error':
                 # remove saved file
                 filename = instance_path.split('instance')[0] + savepath
                 print(f'remove file name : {filename}')
                 os.remove(filename)
 
-                create_account_result = 3; # duplicate key error
+                create_account_result = 3 # duplicate key error
             else:
-                create_account_result = 4;  # database error
+                create_account_result = 4 # database error
         else:
-            create_account_result = 2; # fail for file save
+            create_account_result = 2 # fail for file save
 
         return create_account_result
 
