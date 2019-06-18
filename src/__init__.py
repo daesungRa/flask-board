@@ -18,7 +18,7 @@ def before_request():
 
 @app.route("/", methods=['GET'])
 def home():
-    session.permanent = True;
+    session.permanent = True
     return render_template('index.html', account_form=g.account_form), 200
 
 @app.route("/contact/", methods=['GET'])
